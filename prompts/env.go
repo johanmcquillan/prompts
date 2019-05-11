@@ -5,6 +5,7 @@ import "os"
 const (
 	envUser = "USER"
 	envPWD = "PWD"
+	envHome = "HOME"
 )
 
 type EnvComponent struct {
@@ -22,7 +23,7 @@ func MakeUserComponent() *EnvComponent {
 	return MakeEnvComponent(envUser)
 }
 
-func MakeFullPWDComponent() *EnvComponent {
+func MakeFullWDComponent() *EnvComponent {
 	return MakeEnvComponent(envPWD)
 }
 
