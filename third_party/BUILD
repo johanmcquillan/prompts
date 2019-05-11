@@ -6,5 +6,7 @@ go_get(
     install = [
         "assert",
         "require",
+        "vendor/github.com/davecgh/go-spew/spew",
+        "vendor/github.com/pmezard/go-difflib/difflib",
     ]
 )

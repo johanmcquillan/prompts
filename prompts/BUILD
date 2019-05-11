@@ -6,3 +6,15 @@ go_library(
     ),
     visibility = ['PUBLIC'],
 )
+
+go_test(
+    name = 'test',
+    srcs = glob(
+        ['*_test.go'],
+    ),
+    deps = [
+        ":prompts",
+        "//third_party:testify",
+    ],
+    visibility = ['PUBLIC'],
+)

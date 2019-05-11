@@ -1,28 +1,26 @@
 package prompts
 
-import "os"
-
-const envUser = "USER"
-
-type EnvComponent struct {
-	Colour int
-	value  string
+type StaticComponent struct {
+	*AnsiFormat
+	Value string
 }
 
-func MakeEnvComponent(envVar string) Component {
-	return &EnvComponent{
-		value: os.Getenv(envVar),
+func MakeStaticComponent(value string) Component {
+	return &StaticComponent{
+		Value: value,
 	}
 }
 
-func MakeUser() Component {
-	return MakeEnvComponent(envUser)
+func (c *StaticComponent) StringAndLength() (string, int) {
+	return c.Colourise(c.Value), len(c.Value)
 }
 
-func (u *EnvComponent) String() string {
-	return u.value
+func (c *StaticComponent) String() string {
+	s, _ := c.StringAndLength()
+	return s
 }
 
-func (u *EnvComponent) Length() int {
-	return len(u.value)
+func (c *StaticComponent) Length() int {
+	_, l := c.StringAndLength()
+	return l
 }

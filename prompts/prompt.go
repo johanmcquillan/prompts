@@ -35,7 +35,7 @@ func (p *Prompt) WithEnvVar(envName string) *Prompt {
 }
 
 func (p *Prompt) WithUser() *Prompt {
-	return p.WithComponent(MakeUser())
+	return p.WithComponent(MakeUserComponent())
 }
 
 func (p *Prompt) WithEmptyElements() *Prompt {
@@ -47,4 +47,3 @@ func (p *Prompt) WithoutEmptyElements() *Prompt {
 	p.ShowEmptyElements = false
 	return p
 }
-
