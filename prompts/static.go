@@ -4,21 +4,25 @@ import "os"
 
 const envUser = "USER"
 
-type User struct {
+type EnvComponent struct {
 	Colour int
-	name string
+	value  string
 }
 
-func MakeUser() Component {
-	return &User{
-		name: os.Getenv(envUser),
+func MakeEnvComponent(envVar string) Component {
+	return &EnvComponent{
+		value: os.Getenv(envVar),
 	}
 }
 
-func (u *User) String() string {
-	return u.name
+func MakeUser() Component {
+	return MakeEnvComponent(envUser)
 }
 
-func (u *User) Length() int {
-	return len(u.name)
+func (u *EnvComponent) String() string {
+	return u.value
+}
+
+func (u *EnvComponent) Length() int {
+	return len(u.value)
 }

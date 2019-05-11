@@ -5,7 +5,8 @@ import "strings"
 const separator = ":"
 
 type Prompt struct {
-	Contexts []Component
+	Components []Component
+	showEmptyElements bool
 }
 
 func MakePrompt() *Prompt {
@@ -13,7 +14,12 @@ func MakePrompt() *Prompt {
 }
 
 func (p *Prompt) WithComponent(c Component) *Prompt {
-	p.Contexts = append(p.Contexts, c)
+	p.Components = append(p.Components, c)
+	return p
+}
+
+func (p *Prompt) WithEnvVar(envName string) *Prompt {
+	p.Components = append(p.Components, MakeEnvComponent(envName))
 	return p
 }
 
@@ -22,9 +28,11 @@ func (p *Prompt) WithUser() *Prompt {
 }
 
 func (p *Prompt) String() string {
-	subStrings := make([]string, len(p.Contexts))
-	for i, c := range p.Contexts {
-		subStrings[i] = c.String()
+	var subStrings []string
+	for _, component := range p.Components {
+		if component.Length() > 0 {
+			subStrings = append(subStrings, component.String())
+		}
 	}
 
 	return strings.Join(subStrings, separator)
