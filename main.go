@@ -16,7 +16,8 @@ func main() {
     prompt := prompts.
         MakePrompt().
         WithUser().
-        WithEnvVar(envMachine)
+        WithEnvVar(envMachine).
+        WithRelativeWorkingDir()
 
     fmt.Print(prompt)
 }

@@ -38,12 +38,20 @@ func (p *Prompt) WithUser() *Prompt {
 	return p.WithComponent(MakeUserComponent())
 }
 
-func (p *Prompt) WithEmptyElements() *Prompt {
+func (p *Prompt) WithFullWorkingDir() *Prompt {
+	return p.WithComponent(MakeFullWDComponent())
+}
+
+func (p *Prompt) WithRelativeWorkingDir() *Prompt {
+	return p.WithComponent(MakeRelativeWDComponent())
+}
+
+func (p *Prompt) IncludeEmptyElements() *Prompt {
 	p.ShowEmptyElements = true
 	return p
 }
 
-func (p *Prompt) WithoutEmptyElements() *Prompt {
+func (p *Prompt) ExcludeEmptyElements() *Prompt {
 	p.ShowEmptyElements = false
 	return p
 }
