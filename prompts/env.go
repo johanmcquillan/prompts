@@ -12,17 +12,17 @@ type EnvComponent struct {
 	envVar  string
 }
 
-func MakeEnvComponent(envVar string) Component {
+func MakeEnvComponent(envVar string) *EnvComponent {
 	return &EnvComponent{
 		envVar: envVar,
 	}
 }
 
-func MakeUserComponent() Component {
+func MakeUserComponent() *EnvComponent {
 	return MakeEnvComponent(envUser)
 }
 
-func MakeFullPWDComponent() Component {
+func MakeFullPWDComponent() *EnvComponent {
 	return MakeEnvComponent(envPWD)
 }
 

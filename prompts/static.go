@@ -5,7 +5,7 @@ type StaticComponent struct {
 	Value string
 }
 
-func MakeStaticComponent(value string) Component {
+func MakeStaticComponent(value string) *StaticComponent {
 	return &StaticComponent{
 		Value: value,
 	}
