@@ -1,16 +1,26 @@
 package prompts
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
-const separator = ":"
+const (
+	defaultEnder     = "$"
+	defaultSeparator = ":"
+)
 
 type Prompt struct {
 	Components []Component
 	ShowEmptyElements bool
+	Ender, Separator string
 }
 
 func MakePrompt() *Prompt {
-	return &Prompt{}
+	return &Prompt{
+		Ender: defaultEnder,
+		Separator: defaultSeparator,
+	}
 }
 
 func (p *Prompt) String() string {
@@ -21,7 +31,7 @@ func (p *Prompt) String() string {
 		}
 	}
 
-	return strings.Join(subStrings, separator)
+	return fmt.Sprintf("%s%s ", strings.Join(subStrings, p.Separator), p.Ender)
 }
 
 func (p *Prompt) WithComponent(c Component) *Prompt {
