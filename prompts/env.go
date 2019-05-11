@@ -19,25 +19,25 @@ func MakeUserComponent() Component {
 	return MakeEnvComponent(envUser)
 }
 
-func (u *EnvComponent) StringAndLength() (string, int) {
+func (c *EnvComponent) StringAndLength() (string, int) {
 	var formattedValue string
-	rawValue := os.Getenv(u.envVar)
+	rawValue := os.Getenv(c.envVar)
 
-	if u.Format == nil {
+	if c.Format == nil {
 		formattedValue = rawValue
 	} else {
-		formattedValue = u.Format.Colourise(rawValue)
+		formattedValue = c.Format.Colourise(rawValue)
 	}
 
 	return formattedValue, len(rawValue)
 }
 
-func (u *EnvComponent) String() string {
-	s, _ := u.StringAndLength()
+func (c *EnvComponent) String() string {
+	s, _ := c.StringAndLength()
 	return s
 }
 
-func (u *EnvComponent) Length() int {
-	_, l := u.StringAndLength()
+func (c *EnvComponent) Length() int {
+	_, l := c.StringAndLength()
 	return l
 }
