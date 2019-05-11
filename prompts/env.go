@@ -39,22 +39,18 @@ func MakeFullWDComponent() *EnvComponent {
 	return MakeEnvComponent(envPWD)
 }
 
-func (c *EnvComponent) StringAndLength() (string, int) {
+func (c *EnvComponent) GenerateElement() Element {
 	rawValue := c.GetEnv(c.envVar)
 
 	if c.Formatter == nil {
-		return rawValue, len(rawValue)
+		return Element{rawValue, len(rawValue)}
 	}
 
-	return c.Colourise(rawValue), len(rawValue)
+	return Element{c.Colourise(rawValue), len(rawValue)}
 }
 
-func (c *EnvComponent) String() string {
-	s, _ := c.StringAndLength()
-	return s
-}
 
-func (c *EnvComponent) Length() int {
-	_, l := c.StringAndLength()
-	return l
+func (c *EnvComponent) WithFormatter(formatter Formatter) *EnvComponent {
+	c.Formatter = formatter
+	return c
 }

@@ -24,6 +24,12 @@ type AnsiFormat struct {
 	Italic bool
 }
 
+func MakeAnsiColour(colour AnsiColour) *AnsiFormat {
+	return &AnsiFormat{
+		Colour: colour,
+	}
+}
+
 func (a *AnsiFormat) Colourise(text string) string {
 	if a == nil {
 		return text

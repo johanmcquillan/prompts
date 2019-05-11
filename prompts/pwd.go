@@ -32,24 +32,18 @@ func MakeRelativeWDComponent() *FunctionalComponent {
 	}
 }
 
-func (c *FunctionalComponent) StringAndLength() (string, int) {
+func (c *FunctionalComponent) GenerateElement() Element {
 	rawValue := c.function()
 	if c.Formatter == nil {
-		return rawValue, len(rawValue)
+		return Element{rawValue, len(rawValue)}
 	}
-	return c.Colourise(rawValue), len(rawValue)
+	return Element{c.Colourise(rawValue), len(rawValue)}
 }
 
-func (c *FunctionalComponent) String() string {
-	s, _ := c.StringAndLength()
-	return s
+func (c *FunctionalComponent) WithFormatter(formatter Formatter) *FunctionalComponent {
+	c.Formatter = formatter
+	return c
 }
-
-func (c *FunctionalComponent) Length() int {
-	_, l := c.StringAndLength()
-	return l
-}
-
 
 func insertPathHomeSymbol(path string) string {
 	homePath := os.Getenv(envHome)

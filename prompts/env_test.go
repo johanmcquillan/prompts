@@ -31,13 +31,10 @@ func TestEnv(t *testing.T) {
 					envVar:     envVar,
 				}
 
-				s, l := cmp.StringAndLength()
-				actualString, ok := env[envVar]
+				actualElement := cmp.GenerateElement()
+				expectedElement := Element{env[envVar], len(env[envVar])}
 
-				if assert.True(t, ok) {
-					assert.Equal(t, actualString, s)
-					assert.Equal(t, len(actualString), l)
-				}
+				assert.Equal(t, expectedElement, actualElement)
 			})
 		}
 	})

@@ -1,12 +1,13 @@
 package prompts
 
-import "fmt"
+type Element struct {
+	Output string
+	Length int
+}
 
 type Component interface {
-	fmt.Stringer
 	Formatter
-	Length() int
-	StringAndLength() (string, int)
+	GenerateElement() Element
 }
 
 type Formatter interface {

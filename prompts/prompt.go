@@ -18,7 +18,7 @@ type Prompt struct {
 
 func MakePrompt() *Prompt {
 	return &Prompt{
-		Ender: defaultEnder,
+		Ender:     defaultEnder,
 		Separator: defaultSeparator,
 	}
 }
@@ -26,8 +26,9 @@ func MakePrompt() *Prompt {
 func (p *Prompt) String() string {
 	var subStrings []string
 	for _, component := range p.Components {
-		if component.Length() > 0 || p.ShowEmptyElements {
-			subStrings = append(subStrings, component.String())
+		e := component.GenerateElement()
+		if e.Length > 0 || p.ShowEmptyElements {
+			subStrings = append(subStrings, e.Output)
 		}
 	}
 
@@ -44,16 +45,33 @@ func (p *Prompt) WithEnvVar(envName string) *Prompt {
 	return p
 }
 
+func (p *Prompt) WithFormattedEnvVar(envName string, f Formatter) *Prompt {
+	p.Components = append(p.Components, MakeEnvComponent(envName).WithFormatter(f))
+	return p
+}
+
 func (p *Prompt) WithUser() *Prompt {
 	return p.WithComponent(MakeUserComponent())
+}
+
+func (p *Prompt) WithFormattedUser(f Formatter) *Prompt {
+	return p.WithComponent(MakeUserComponent().WithFormatter(f))
 }
 
 func (p *Prompt) WithFullWorkingDir() *Prompt {
 	return p.WithComponent(MakeFullWDComponent())
 }
 
+func (p *Prompt) WithFormattedFullWorkingDir(f Formatter) *Prompt {
+	return p.WithComponent(MakeFullWDComponent().WithFormatter(f))
+}
+
 func (p *Prompt) WithRelativeWorkingDir() *Prompt {
 	return p.WithComponent(MakeRelativeWDComponent())
+}
+
+func (p *Prompt) WithFormattedRelativeWorkingDir(f Formatter) *Prompt {
+	return p.WithComponent(MakeRelativeWDComponent().WithFormatter(f))
 }
 
 func (p *Prompt) IncludeEmptyElements() *Prompt {

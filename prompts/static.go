@@ -11,19 +11,14 @@ func MakeStaticComponent(value string) *StaticComponent {
 	}
 }
 
-func (c *StaticComponent) StringAndLength() (string, int) {
+func (c *StaticComponent) GenerateElement() Element {
 	if c.Formatter == nil {
-		return c.Value, len(c.Value)
+		return Element{c.Value, len(c.Value)}
 	}
-	return c.Colourise(c.Value), len(c.Value)
+	return Element{c.Colourise(c.Value), len(c.Value)}
 }
 
-func (c *StaticComponent) String() string {
-	s, _ := c.StringAndLength()
-	return s
-}
-
-func (c *StaticComponent) Length() int {
-	_, l := c.StringAndLength()
-	return l
+func (c *StaticComponent) WithFormatter(formatter Formatter) *StaticComponent {
+	c.Formatter = formatter
+	return c
 }
