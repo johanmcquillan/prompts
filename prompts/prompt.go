@@ -74,6 +74,14 @@ func (p *Prompt) WithFormattedRelativeWorkingDir(f Formatter) *Prompt {
 	return p.WithComponent(MakeRelativeWDComponent().WithFormatter(f))
 }
 
+func (p *Prompt) WithGitBranch() *Prompt {
+	return p.WithComponent(MakeGitBranchComponent())
+}
+
+func (p *Prompt) WithFormattedGitBranch(f Formatter) *Prompt {
+	return p.WithComponent(MakeGitBranchComponent().WithFormatter(f))
+}
+
 func (p *Prompt) IncludeEmptyElements() *Prompt {
 	p.ShowEmptyElements = true
 	return p

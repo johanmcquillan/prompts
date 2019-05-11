@@ -17,7 +17,8 @@ func main() {
         MakePrompt().
         WithUser().
         WithEnvVar(envMachine).
-        WithRelativeWorkingDir()
+        WithRelativeWorkingDir().
+        WithGitBranch()
 
     fmt.Print(prompt)
 }
