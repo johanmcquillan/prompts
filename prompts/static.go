@@ -1,7 +1,7 @@
 package prompts
 
 type StaticComponent struct {
-	*AnsiFormat
+	Formatter
 	Value string
 }
 
@@ -12,6 +12,9 @@ func MakeStaticComponent(value string) Component {
 }
 
 func (c *StaticComponent) StringAndLength() (string, int) {
+	if c.Formatter == nil {
+		return c.Value, len(c.Value)
+	}
 	return c.Colourise(c.Value), len(c.Value)
 }
 

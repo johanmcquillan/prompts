@@ -27,7 +27,7 @@ func TestAnsi(t *testing.T) {
 
 		cmp := &StaticComponent{
 			Value: rawString,
-			AnsiFormat: &AnsiFormat{
+			Formatter: &AnsiFormat{
 				Colour: AnsiColour(colour),
 			},
 		}

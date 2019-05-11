@@ -2,10 +2,13 @@ package prompts
 
 import "os"
 
-const envUser = "USER"
+const (
+	envUser = "USER"
+	envPWD = "PWD"
+)
 
 type EnvComponent struct {
-	Format *AnsiFormat
+	Formatter
 	envVar  string
 }
 
@@ -19,17 +22,17 @@ func MakeUserComponent() Component {
 	return MakeEnvComponent(envUser)
 }
 
+func MakeFullPWDComponent() Component {
+	return MakeEnvComponent(envPWD)
+}
+
 func (c *EnvComponent) StringAndLength() (string, int) {
-	var formattedValue string
 	rawValue := os.Getenv(c.envVar)
 
-	if c.Format == nil {
-		formattedValue = rawValue
-	} else {
-		formattedValue = c.Format.Colourise(rawValue)
+	if c.Formatter == nil {
+		return rawValue, len(rawValue)
 	}
-
-	return formattedValue, len(rawValue)
+	return c.Colourise(rawValue), len(rawValue)
 }
 
 func (c *EnvComponent) String() string {
