@@ -3,18 +3,30 @@ package prompts
 import "os"
 
 const (
-	envUser = "USER"
-	envPWD = "PWD"
 	envHome = "HOME"
+	envPWD  = "PWD"
+	envUser = "USER"
 )
 
+type envFetcher interface {
+	GetEnv(string) string
+}
+
 type EnvComponent struct {
+	envFetcher
 	Formatter
 	envVar  string
 }
 
+type ActualEnv struct {}
+
+func (ActualEnv) GetEnv(envVar string) string {
+	return os.Getenv(envVar)
+}
+
 func MakeEnvComponent(envVar string) *EnvComponent {
 	return &EnvComponent{
+		envFetcher: ActualEnv{},
 		envVar: envVar,
 	}
 }
@@ -28,11 +40,12 @@ func MakeFullWDComponent() *EnvComponent {
 }
 
 func (c *EnvComponent) StringAndLength() (string, int) {
-	rawValue := os.Getenv(c.envVar)
+	rawValue := c.GetEnv(c.envVar)
 
 	if c.Formatter == nil {
 		return rawValue, len(rawValue)
 	}
+
 	return c.Colourise(rawValue), len(rawValue)
 }
 
