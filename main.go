@@ -6,15 +6,17 @@ import (
 )
 
 const (
-    tsyncEnvVar = "TERMINALSYNCSPACE"
-    columnsEnvVar = "COLUMNS"
+    envMachine     = "MACHINE"
+    tsyncEnvVar    = "TERMINALSYNCSPACE"
+    columnsEnvVar  = "COLUMNS"
     defaultColumns = 40
 )
 
 func main() {
     prompt := prompts.
         MakePrompt().
-        WithUser()
+        WithUser().
+        WithEnvVar(envMachine)
 
     fmt.Print(prompt)
 }

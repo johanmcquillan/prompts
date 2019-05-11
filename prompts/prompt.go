@@ -6,11 +6,22 @@ const separator = ":"
 
 type Prompt struct {
 	Components []Component
-	showEmptyElements bool
+	ShowEmptyElements bool
 }
 
 func MakePrompt() *Prompt {
 	return &Prompt{}
+}
+
+func (p *Prompt) String() string {
+	var subStrings []string
+	for _, component := range p.Components {
+		if component.Length() > 0 || p.ShowEmptyElements {
+			subStrings = append(subStrings, component.String())
+		}
+	}
+
+	return strings.Join(subStrings, separator)
 }
 
 func (p *Prompt) WithComponent(c Component) *Prompt {
@@ -27,13 +38,13 @@ func (p *Prompt) WithUser() *Prompt {
 	return p.WithComponent(MakeUser())
 }
 
-func (p *Prompt) String() string {
-	var subStrings []string
-	for _, component := range p.Components {
-		if component.Length() > 0 {
-			subStrings = append(subStrings, component.String())
-		}
-	}
-
-	return strings.Join(subStrings, separator)
+func (p *Prompt) WithEmptyElements() *Prompt {
+	p.ShowEmptyElements = true
+	return p
 }
+
+func (p *Prompt) WithoutEmptyElements() *Prompt {
+	p.ShowEmptyElements = false
+	return p
+}
+
