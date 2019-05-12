@@ -2,12 +2,12 @@ package prompts
 
 type FunctionalComponent struct {
 	Formatter
-	function func() string
+	Function func() string
 }
 
 func MakeFunctionalComponent(f func() string) *FunctionalComponent {
 	return &FunctionalComponent{
-		function: f,
+		Function: f,
 	}
 }
 
@@ -17,7 +17,7 @@ func (c *FunctionalComponent) WithFormatter(formatter Formatter) *FunctionalComp
 }
 
 func (c *FunctionalComponent) MakeElement() Element {
-	rawValue := c.function()
+	rawValue := c.Function()
 	if c.Formatter == nil {
 		return Element{rawValue, len(rawValue)}
 	}

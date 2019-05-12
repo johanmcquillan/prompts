@@ -9,13 +9,13 @@ import (
 
 func MakeGitBranchComponent() *FunctionalComponent {
 	return &FunctionalComponent{
-		function: gitBranch,
+		Function: gitBranch,
 	}
 }
 
 func MakeGitRelativeDirComponent() *FunctionalComponent {
 	return &FunctionalComponent{
-		function: gitRelativeDir,
+		Function: gitRelativeDir,
 	}
 }
 

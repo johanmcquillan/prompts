@@ -17,9 +17,14 @@ const (
 
 type Prompt struct {
 	Opts
+	PromptState
 	Ender
 	Components []Component
 	Separator  string
+}
+
+type PromptState struct {
+	CurrentLength int
 }
 
 func MakePrompt() *Prompt {
@@ -41,16 +46,9 @@ func (p *Prompt) PrintWithExitCode(exitCode int) string {
 	return s
 }
 
-func (p *Prompt) getFallBack() string {
-	if p.FallBack == "" {
-		return defaultFallBack
-	}
-
-	return p.FallBack
-}
-
 func (p *Prompt) String(exitCode int) (output string) {
 	defer func() {
+		// Recover and return a fall back prompt
 		if err := recover(); err != nil {
 			if p.NoRecover {
 				panic(err)
@@ -59,10 +57,29 @@ func (p *Prompt) String(exitCode int) (output string) {
 		}
 	}()
 
-	var subStrings []string
+	var elements, unresolvedElements []*Element
+	var dynamicComponents []*DynamicComponent
 	for _, component := range p.Components {
-		e := component.MakeElement()
-		if e.Length > 0 || p.Opts.ShowAll {
+		if dComponent, ok := component.(*DynamicComponent); ok {
+			e := Element{}
+			elements = append(elements, &e)
+			unresolvedElements = append(unresolvedElements, &e)
+			dynamicComponents = append(dynamicComponents, dComponent)
+		} else if e := component.MakeElement(); e.Length > 0 {
+			elements = append(elements, &e)
+			p.CurrentLength += e.Length
+		}
+	}
+
+	for i, dComponent := range dynamicComponents {
+		e := dComponent.MakeElement()
+		*unresolvedElements[i] = e
+		p.CurrentLength += e.Length
+	}
+
+	var subStrings []string
+	for _, e := range elements {
+		if e != nil && e.Length > 0 {
 			subStrings = append(subStrings, e.Output)
 		}
 	}
@@ -71,6 +88,12 @@ func (p *Prompt) String(exitCode int) (output string) {
 }
 
 func (p *Prompt) WithComponent(c Component) *Prompt {
+	p.Components = append(p.Components, c)
+	return p
+}
+
+func (p *Prompt) WithDynamicComponent(c *DynamicComponent) *Prompt {
+	c.PromptState = &p.PromptState
 	p.Components = append(p.Components, c)
 	return p
 }
@@ -103,4 +126,11 @@ func (p *Prompt) WithArgs(args []string) *Prompt {
 func (p *Prompt) WithOpts(opts Opts) *Prompt {
 	p.Opts = opts
 	return p
+}
+
+func (p *Prompt) getFallBack() string {
+	if p.FallBack == "" {
+		return defaultFallBack
+	}
+	return p.FallBack
 }

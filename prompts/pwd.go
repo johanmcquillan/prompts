@@ -19,12 +19,20 @@ func MakeFullWDComponent() *EnvComponent {
 
 func MakeRelativeWDComponent() *FunctionalComponent {
 	return &FunctionalComponent{
-		function: func() string {
+		Function: func() string {
 			s, _ := relativeToHome()
 			return s
 		},
 	}
 }
+
+//func MakeRelativeWDDynamicComponent() *DynamicComponent {
+//	return &DynamicComponent{
+//		Function: func(p *PromptState) string {
+//
+//		},
+//	}
+//}
 
 func relativeToHome() (string, bool) {
 	return substitutePathPrefix(os.Getenv(envHome), os.Getenv(envPWD), homeSymbol)
