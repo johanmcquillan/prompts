@@ -9,4 +9,4 @@
 ; version = 13.4.3
 
 [go]
-importpath = github.com/johanmcquillan/prompts
+importpath = github.com/johanmcquillan
