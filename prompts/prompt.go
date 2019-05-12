@@ -10,6 +10,10 @@ import (
 const (
 	defaultEnder     = "$"
 	defaultSeparator = ":"
+	panicMsg         = "<Prompt panicked!>"
+
+	// Upon a panic, this prompt will be used instead
+	fallbackPrompt = panicMsg + defaultEnder + " "
 )
 
 type Prompt struct {
@@ -38,7 +42,16 @@ func (p *Prompt) PrintWithExitCode(exitCode int) string {
 	return s
 }
 
-func (p *Prompt) String(exitCode int) string {
+func (p *Prompt) String(exitCode int) (output string) {
+	defer func() {
+		if err := recover(); err != nil {
+			if p.NoRecover {
+				panic(err)
+			}
+		output = fallbackPrompt
+		}
+	}()
+
 	var subStrings []string
 	for _, component := range p.Components {
 		e := component.MakeElement()
