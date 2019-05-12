@@ -3,9 +3,9 @@ package prompts
 import "os"
 
 const (
-	envHome = "HOME"
-	envPWD  = "PWD"
-	envUser = "USER"
+	EnvHome = "HOME"
+	EnvPWD  = "PWD"
+	EnvUser = "USER"
 )
 
 type envFetcher interface {
@@ -34,7 +34,7 @@ func MakeEnvComponent(envVar string) *EnvComponent {
 func MakeUserComponent() *EnvComponent {
 	return &EnvComponent{
 		envFetcher: ActualEnv{},
-		envVar: envUser,
+		envVar:     EnvUser,
 	}
 }
 

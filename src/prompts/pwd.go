@@ -10,17 +10,17 @@ const (
 	homeSymbol = "~"
 	upOne      = ".."
 
-	pathSeparator = string(os.PathSeparator)
+	PathSeparator = string(os.PathSeparator)
 )
 
 func MakeFullWDComponent() *EnvComponent {
-	return MakeEnvComponent(envPWD)
+	return MakeEnvComponent(EnvPWD)
 }
 
 func MakeRelativeWDComponent() *FunctionalComponent {
 	return &FunctionalComponent{
 		Function: func() string {
-			s, _ := relativeToHome()
+			s, _ := RelativeToHome()
 			return s
 		},
 	}
@@ -34,11 +34,11 @@ func MakeRelativeWDComponent() *FunctionalComponent {
 //	}
 //}
 
-func relativeToHome() (string, bool) {
-	return substitutePathPrefix(os.Getenv(envHome), os.Getenv(envPWD), homeSymbol)
+func RelativeToHome() (string, bool) {
+	return SubstitutePathPrefix(os.Getenv(EnvHome), os.Getenv(EnvPWD), homeSymbol)
 }
 
-func substitutePathPrefix(prefixPath, fullPath, substitution string) (string, bool) {
+func SubstitutePathPrefix(prefixPath, fullPath, substitution string) (string, bool) {
 	relativePath, err := filepath.Rel(prefixPath, fullPath)
 	if err != nil || strings.Contains(relativePath, upOne) {
 		return fullPath, false

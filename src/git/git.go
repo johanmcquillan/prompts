@@ -1,20 +1,22 @@
-package prompts
+package git
 
 import (
 	"bytes"
 	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/johanmcquillan/prompts/src/prompts"
 )
 
-func MakeGitBranchComponent() *FunctionalComponent {
-	return &FunctionalComponent{
+func MakeGitBranchComponent() *prompts.FunctionalComponent {
+	return &prompts.FunctionalComponent{
 		Function: gitBranch,
 	}
 }
 
-func MakeGitRelativeDirComponent() *FunctionalComponent {
-	return &FunctionalComponent{
+func MakeGitRelativeDirComponent() *prompts.FunctionalComponent {
+	return &prompts.FunctionalComponent{
 		Function: gitRelativeDir,
 	}
 }
@@ -52,16 +54,16 @@ func gitRepo() string {
 func gitRelativeDir() string {
 	repoPath := gitRepo()
 	if repoPath == "" {
-		s, _ := relativeToHome()
+		s, _ := prompts.RelativeToHome()
 		return s
 	}
 
-	repoSplit := strings.Split(repoPath, pathSeparator)
+	repoSplit := strings.Split(repoPath, prompts.PathSeparator)
 	repoName := repoSplit[len(repoSplit) - 1]
 
-	s, ok := substitutePathPrefix(repoPath, os.Getenv(envPWD), repoName)
+	s, ok := prompts.SubstitutePathPrefix(repoPath, os.Getenv(prompts.EnvPWD), repoName)
 	if !ok {
-		s, _ = relativeToHome()
+		s, _ = prompts.RelativeToHome()
 	}
 
 	return s

@@ -1,6 +1,9 @@
 package main
 
-import "github.com/johanmcquillan/prompts"
+import (
+    "github.com/johanmcquillan/prompts/src/git"
+    "github.com/johanmcquillan/prompts/src/prompts"
+)
 
 const (
     envMachine     = "MACHINE"
@@ -21,11 +24,11 @@ func main() {
                 MakeEnvComponent(envMachine).
                 WithFormatter(prompts.MakeAnsiColour(214).SetBold())).
         WithComponent(
-            prompts.
+            git.
                 MakeGitRelativeDirComponent().
                 WithFormatter(prompts.MakeAnsiColour(69).SetBold())).
         WithComponent(
-            prompts.
+            git.
                 MakeGitBranchComponent().
                 WithFormatter(prompts.MakeAnsiColour(90).SetBold())).
         WithEnder(

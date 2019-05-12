@@ -19,9 +19,9 @@ func TestEnv(t *testing.T) {
 	//relDir := "~/test/directory"
 
 	env := testEnvFetcher{
-		envUser: user,
-		envHome: home,
-		envPWD:  fullDir,
+		EnvUser: user,
+		EnvHome: home,
+		EnvPWD:  fullDir,
 	}
 
 	t.Run("Vars", func(t *testing.T) {
