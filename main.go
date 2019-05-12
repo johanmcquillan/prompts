@@ -1,9 +1,6 @@
 package main
 
-import (
-    "github.com/jessevdk/go-flags"
-    "github.com/johanmcquillan/prompts/prompts"
-)
+import "github.com/johanmcquillan/prompts/prompts"
 
 const (
     envMachine     = "MACHINE"
@@ -13,12 +10,6 @@ const (
 )
 
 func main() {
-    opts := prompts.Opts{}
-    _, err := flags.Parse(&opts)
-    if err != nil {
-        panic(err)
-    }
-
     prompts.
         MakePrompt().
         WithComponent(
@@ -42,5 +33,6 @@ func main() {
                 MakeBinaryEnder(
                     "$", nil,
                     "$", prompts.MakeAnsiColour(prompts.RED))).
-        Print(opts.ExitCode)
+        ParseArgs().
+        Print()
 }

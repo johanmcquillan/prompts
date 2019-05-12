@@ -4,6 +4,9 @@ go_library(
         ['*.go'],
         exclude = ['*_test.go'],
     ),
+    deps = [
+        '//third_party:flags',
+    ],
     visibility = ['PUBLIC'],
 )
 

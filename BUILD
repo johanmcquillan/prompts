@@ -3,6 +3,5 @@ go_binary(
     srcs = ['main.go'],
     deps = [
         '//prompts',
-        '//third_party:flags',
     ],
 )

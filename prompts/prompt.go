@@ -3,6 +3,8 @@ package prompts
 import (
 	"fmt"
 	"strings"
+
+	"github.com/jessevdk/go-flags"
 )
 
 const (
@@ -11,6 +13,7 @@ const (
 )
 
 type Prompt struct {
+	Opts
 	Ender
 	Components        []Component
 	ShowEmptyElements bool
@@ -24,7 +27,13 @@ func MakePrompt() *Prompt {
 	}
 }
 
-func (p *Prompt) Print(exitCode int) string {
+func (p *Prompt) Print() string {
+	s := p.String(p.ExitCode)
+	fmt.Print(s)
+	return s
+}
+
+func (p *Prompt) PrintWithExitCode(exitCode int) string {
 	s := p.String(exitCode)
 	fmt.Print(s)
 	return s
@@ -49,6 +58,26 @@ func (p *Prompt) WithComponent(c Component) *Prompt {
 
 func (p *Prompt) WithEnder(e Ender) *Prompt {
 	p.Ender = e
+	return p
+}
+
+func (p *Prompt) ParseArgs() *Prompt {
+	p.Opts = Opts{}
+	_, err := flags.Parse(&p.Opts)
+	if err != nil {
+		panic(err)
+	}
+
+	return p
+}
+
+func (p *Prompt) WithArgs(args []string) *Prompt {
+	p.Opts = Opts{}
+	_, err := flags.ParseArgs(&p.Opts, args)
+	if err != nil {
+		panic(err)
+	}
+
 	return p
 }
 
