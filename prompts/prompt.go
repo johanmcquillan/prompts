@@ -16,7 +16,6 @@ type Prompt struct {
 	Opts
 	Ender
 	Components        []Component
-	ShowEmptyElements bool
 	Separator         string
 }
 
@@ -43,7 +42,7 @@ func (p *Prompt) String(exitCode int) string {
 	var subStrings []string
 	for _, component := range p.Components {
 		e := component.MakeElement()
-		if e.Length > 0 || p.ShowEmptyElements {
+		if e.Length > 0 || p.Opts.ShowAll {
 			subStrings = append(subStrings, e.Output)
 		}
 	}
@@ -83,15 +82,5 @@ func (p *Prompt) WithArgs(args []string) *Prompt {
 
 func (p *Prompt) WithOpts(opts Opts) *Prompt {
 	p.Opts = opts
-	return p
-}
-
-func (p *Prompt) IncludeEmptyElements() *Prompt {
-	p.ShowEmptyElements = true
-	return p
-}
-
-func (p *Prompt) ExcludeEmptyElements() *Prompt {
-	p.ShowEmptyElements = false
 	return p
 }
