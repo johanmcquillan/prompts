@@ -1,6 +1,6 @@
 go_binary(
-    name = 'main',
-    srcs = ['main.go'],
+    name = 'my-prompt',
+    srcs = ['my-prompt.go'],
     deps = [
         '//src/prompts',
         '//src/git',
