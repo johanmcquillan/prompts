@@ -26,7 +26,7 @@ func MakePrompt() *Prompt {
 func (p *Prompt) String() string {
 	var subStrings []string
 	for _, component := range p.Components {
-		e := component.GenerateElement()
+		e := component.MakeElement()
 		if e.Length > 0 || p.ShowEmptyElements {
 			subStrings = append(subStrings, e.Output)
 		}

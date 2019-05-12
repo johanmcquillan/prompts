@@ -7,7 +7,7 @@ type Element struct {
 
 type Component interface {
 	Formatter
-	GenerateElement() Element
+	MakeElement() Element
 }
 
 type Formatter interface {
