@@ -6,31 +6,31 @@ import (
 )
 
 const (
-	defaultEnder     = "$"
+	defaultEnder = "$"
 	defaultSeparator = ":"
 )
 
 type Prompt struct {
+	Ender
 	Components        []Component
 	ShowEmptyElements bool
-	Ender             string
 	Separator         string
 }
 
 func MakePrompt() *Prompt {
 	return &Prompt{
-		Ender:     defaultEnder,
+		Ender:     MakeStaticEnder(defaultEnder),
 		Separator: defaultSeparator,
 	}
 }
 
-func (p *Prompt) Print() string {
-	s := p.String()
+func (p *Prompt) Print(exitCode int) string {
+	s := p.String(exitCode)
 	fmt.Print(s)
 	return s
 }
 
-func (p *Prompt) String() string {
+func (p *Prompt) String(exitCode int) string {
 	var subStrings []string
 	for _, component := range p.Components {
 		e := component.MakeElement()
@@ -39,7 +39,7 @@ func (p *Prompt) String() string {
 		}
 	}
 
-	return fmt.Sprintf("%s%s ", strings.Join(subStrings, p.Separator), p.Ender)
+	return fmt.Sprintf("%s%s ", strings.Join(subStrings, p.Separator), p.End(exitCode).Output)
 }
 
 func (p *Prompt) WithComponent(c Component) *Prompt {
@@ -47,13 +47,8 @@ func (p *Prompt) WithComponent(c Component) *Prompt {
 	return p
 }
 
-func (p *Prompt) WithEnvVar(envName string) *Prompt {
-	p.Components = append(p.Components, MakeEnvComponent(envName))
-	return p
-}
-
-func (p *Prompt) WithFormattedEnvVar(envName string, f Formatter) *Prompt {
-	p.Components = append(p.Components, MakeEnvComponent(envName).WithFormatter(f))
+func (p *Prompt) WithEnder(e Ender) *Prompt {
+	p.Ender = e
 	return p
 }
 

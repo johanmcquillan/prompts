@@ -10,6 +10,10 @@ type Component interface {
 	MakeElement() Element
 }
 
+type Ender interface {
+	End(int) Element
+}
+
 type Formatter interface {
 	Format(string) string
 }

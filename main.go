@@ -27,6 +27,11 @@ func main() {
         WithComponent(
             prompts.
                 MakeGitBranchComponent().
-                WithFormatter(prompts.MakeAnsiColour(1).SetBold())).
-        Print()
+                WithFormatter(prompts.MakeAnsiColour(90).SetBold())).
+        WithEnder(
+            prompts.
+                MakeBinaryEnder(
+                    "$", nil,
+                    "$", prompts.MakeAnsiColour(prompts.RED))).
+        Print(0)
 }

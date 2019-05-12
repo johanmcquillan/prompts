@@ -15,7 +15,15 @@ const (
 type AnsiColour int
 
 const (
-	Red AnsiColour = 1
+	RED   AnsiColour = iota +1
+	GREEN
+	YELLOW
+	BLUE
+	MAGENTA
+	CYAN
+	LIGHT_GREY
+	DARK_GREY
+	WHITE           = 15
 )
 
 type AnsiFormat struct {
