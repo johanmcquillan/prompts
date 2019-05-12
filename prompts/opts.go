@@ -1,13 +1,12 @@
 package prompts
 
 type Opts struct {
-	Args `group:"Application Arguments"`
+	Args   `group:"Application Arguments"`
 	Config `group:"Configuration Options"`
 }
 
 type Args struct {
 	ExitCode     int `short:"c" long:"exit-code" default:"0" description:"Exit code of previous command"`
-	//TargetLength int `short:"l" `
 }
 
 type Config struct {

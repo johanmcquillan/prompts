@@ -49,12 +49,13 @@ func (p *Prompt) PrintWithExitCode(exitCode int) string {
 
 func (p *Prompt) String(exitCode int) (output string) {
 	defer func() {
+		if p.NoRecover {
+			return
+		}
+
 		// Recover and return a fall back prompt
 		if r := recover(); r != nil {
-			if p.NoRecover {
-				panic(r)
-			}
-		output = p.getFallBack()
+			output = p.getFallBack()
 		}
 	}()
 
@@ -106,7 +107,7 @@ func (p *Prompt) WithEnder(e Ender) *Prompt {
 }
 
 func (p *Prompt) ParseArgs() *Prompt {
-	defer recoverFromHelpError()
+	defer p.recoverFromHelpError()
 
 	p.Opts = Opts{}
 	_, err := flags.Parse(&p.Opts)
@@ -118,7 +119,7 @@ func (p *Prompt) ParseArgs() *Prompt {
 }
 
 func (p *Prompt) WithArgs(args []string) *Prompt {
-	defer recoverFromHelpError()
+	defer p.recoverFromHelpError()
 
 	p.Opts = Opts{}
 	_, err := flags.ParseArgs(&p.Opts, args)
@@ -141,7 +142,11 @@ func (p *Prompt) getFallBack() string {
 	return p.FallBack
 }
 
-func recoverFromHelpError() {
+func (p *Prompt) recoverFromHelpError() {
+	if p.NoRecover {
+		return
+	}
+
 	if r := recover(); r != nil {
 		if err, ok := r.(*flags.Error); ok && err.Type == flags.ErrHelp {
 			os.Exit(0)
