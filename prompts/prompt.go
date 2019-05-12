@@ -10,10 +10,9 @@ import (
 const (
 	defaultEnder     = "$"
 	defaultSeparator = ":"
-	panicMsg         = "<Prompt panicked!>"
-
+	defaultPanicMsg  = "<Prompt panicked!>"
 	// Upon a panic, this prompt will be used instead
-	fallbackPrompt = panicMsg + defaultEnder + " "
+	defaultFallBack = defaultPanicMsg + defaultEnder + " "
 )
 
 type Prompt struct {
@@ -42,13 +41,21 @@ func (p *Prompt) PrintWithExitCode(exitCode int) string {
 	return s
 }
 
+func (p *Prompt) getFallBack() string {
+	if p.FallBack == "" {
+		return defaultFallBack
+	}
+
+	return p.FallBack
+}
+
 func (p *Prompt) String(exitCode int) (output string) {
 	defer func() {
 		if err := recover(); err != nil {
 			if p.NoRecover {
 				panic(err)
 			}
-		output = fallbackPrompt
+		output = p.getFallBack()
 		}
 	}()
 
