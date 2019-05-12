@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	defaultEnder = "$"
+	defaultEnder     = "$"
 	defaultSeparator = ":"
 )
 
@@ -78,6 +78,11 @@ func (p *Prompt) WithArgs(args []string) *Prompt {
 		panic(err)
 	}
 
+	return p
+}
+
+func (p *Prompt) WithOpts(opts Opts) *Prompt {
+	p.Opts = opts
 	return p
 }
 
