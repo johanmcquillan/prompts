@@ -27,7 +27,7 @@ func MakeFunctionalComponent(f func() string) *FunctionalComponent {
 func MakeRelativeWDComponent() *FunctionalComponent {
 	return &FunctionalComponent{
 		function: func() string {
-			return insertPathHomeSymbol(os.Getenv(envPWD))
+			return substitutePathPrefix(os.Getenv(envHome), os.Getenv(envPWD), homeSymbol)
 		},
 	}
 }
@@ -45,16 +45,11 @@ func (c *FunctionalComponent) WithFormatter(formatter Formatter) *FunctionalComp
 	return c
 }
 
-func insertPathHomeSymbol(path string) string {
-	homePath := os.Getenv(envHome)
-	if homePath == "" {
-		return ""
+func substitutePathPrefix(prefixPath, fullPath, substitution string) string {
+	relativePath, err := filepath.Rel(prefixPath, fullPath)
+	if err != nil || strings.Contains(relativePath, upOne) {
+		return fullPath
 	}
 
-	relPath, err := filepath.Rel(homePath, path)
-	if err != nil || strings.Contains(relPath, upOne) {
-		return ""
-	}
-
-	return filepath.Join(homeSymbol, relPath)
+	return filepath.Join(substitution, relativePath)
 }
