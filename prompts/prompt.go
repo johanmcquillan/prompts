@@ -50,38 +50,6 @@ func (p *Prompt) WithFormattedEnvVar(envName string, f Formatter) *Prompt {
 	return p
 }
 
-func (p *Prompt) WithUser() *Prompt {
-	return p.WithComponent(MakeUserComponent())
-}
-
-func (p *Prompt) WithFormattedUser(f Formatter) *Prompt {
-	return p.WithComponent(MakeUserComponent().WithFormatter(f))
-}
-
-func (p *Prompt) WithFullWorkingDir() *Prompt {
-	return p.WithComponent(MakeFullWDComponent())
-}
-
-func (p *Prompt) WithFormattedFullWorkingDir(f Formatter) *Prompt {
-	return p.WithComponent(MakeFullWDComponent().WithFormatter(f))
-}
-
-func (p *Prompt) WithRelativeWorkingDir() *Prompt {
-	return p.WithComponent(MakeRelativeWDComponent())
-}
-
-func (p *Prompt) WithFormattedRelativeWorkingDir(f Formatter) *Prompt {
-	return p.WithComponent(MakeRelativeWDComponent().WithFormatter(f))
-}
-
-func (p *Prompt) WithGitBranch() *Prompt {
-	return p.WithComponent(MakeGitBranchComponent())
-}
-
-func (p *Prompt) WithFormattedGitBranch(f Formatter) *Prompt {
-	return p.WithComponent(MakeGitBranchComponent().WithFormatter(f))
-}
-
 func (p *Prompt) IncludeEmptyElements() *Prompt {
 	p.ShowEmptyElements = true
 	return p

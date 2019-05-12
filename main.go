@@ -15,10 +15,10 @@ const (
 func main() {
     prompt := prompts.
         MakePrompt().
-        WithUser().
+        WithComponent(prompts.MakeUserComponent()).
         WithEnvVar(envMachine).
-        WithRelativeWorkingDir().
-        WithGitBranch()
+        WithComponent(prompts.MakeRelativeWDComponent()).
+        WithComponent(prompts.MakeGitBranchComponent())
 
     fmt.Print(prompt)
 }

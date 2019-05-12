@@ -31,4 +31,12 @@ func gitBranch() string {
 	return branchString
 }
 
-
+//func gitRepo() string {
+//	cmd := exec.Command("git", "rev-parse", "--show-toplevel")
+//	var out bytes.Buffer
+//	cmd.Stdout = &out
+//	if err := cmd.Run(); err != nil {
+//		return ""
+//	}
+//	return path[len(path) - 1]
+//}
