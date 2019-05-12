@@ -8,10 +8,14 @@ import (
 
 const (
 	homeSymbol = "~"
-	upOne = ".."
+	upOne      = ".."
 
 	pathSeparator = string(os.PathSeparator)
 )
+
+func MakeFullWDComponent() *EnvComponent {
+	return MakeEnvComponent(envPWD)
+}
 
 func MakeRelativeWDComponent() *FunctionalComponent {
 	return &FunctionalComponent{

@@ -11,15 +11,15 @@ func MakeFunctionalComponent(f func() string) *FunctionalComponent {
 	}
 }
 
+func (c *FunctionalComponent) WithFormatter(formatter Formatter) *FunctionalComponent {
+	c.Formatter = formatter
+	return c
+}
+
 func (c *FunctionalComponent) MakeElement() Element {
 	rawValue := c.function()
 	if c.Formatter == nil {
 		return Element{rawValue, len(rawValue)}
 	}
 	return Element{c.Format(rawValue), len(rawValue)}
-}
-
-func (c *FunctionalComponent) WithFormatter(formatter Formatter) *FunctionalComponent {
-	c.Formatter = formatter
-	return c
 }

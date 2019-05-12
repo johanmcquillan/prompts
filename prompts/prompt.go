@@ -11,9 +11,10 @@ const (
 )
 
 type Prompt struct {
-	Components []Component
+	Components        []Component
 	ShowEmptyElements bool
-	Ender, Separator string
+	Ender             string
+	Separator         string
 }
 
 func MakePrompt() *Prompt {

@@ -15,7 +15,7 @@ type envFetcher interface {
 type EnvComponent struct {
 	envFetcher
 	Formatter
-	envVar  string
+	envVar string
 }
 
 type ActualEnv struct {}
@@ -31,12 +31,9 @@ func MakeEnvComponent(envVar string) *EnvComponent {
 	}
 }
 
-func MakeUserComponent() *EnvComponent {
-	return MakeEnvComponent(envUser)
-}
-
-func MakeFullWDComponent() *EnvComponent {
-	return MakeEnvComponent(envPWD)
+func (c *EnvComponent) WithFormatter(formatter Formatter) *EnvComponent {
+	c.Formatter = formatter
+	return c
 }
 
 func (c *EnvComponent) MakeElement() Element {
@@ -47,10 +44,4 @@ func (c *EnvComponent) MakeElement() Element {
 	}
 
 	return Element{c.Format(rawValue), len(rawValue)}
-}
-
-
-func (c *EnvComponent) WithFormatter(formatter Formatter) *EnvComponent {
-	c.Formatter = formatter
-	return c
 }
