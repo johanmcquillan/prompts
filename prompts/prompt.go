@@ -24,6 +24,12 @@ func MakePrompt() *Prompt {
 	}
 }
 
+func (p *Prompt) Print() string {
+	s := p.String()
+	fmt.Print(s)
+	return s
+}
+
 func (p *Prompt) String() string {
 	var subStrings []string
 	for _, component := range p.Components {

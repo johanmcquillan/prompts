@@ -13,9 +13,9 @@ func MakeGitBranchComponent() *FunctionalComponent {
 	}
 }
 
-func MakeGitRelativeComponent() *FunctionalComponent {
+func MakeGitRelativeDirComponent() *FunctionalComponent {
 	return &FunctionalComponent{
-		function: gitRelative,
+		function: gitRelativeDir,
 	}
 }
 
@@ -49,7 +49,7 @@ func gitRepo() string {
 	return strings.Replace(out.String(), "\n", "", -1)
 }
 
-func gitRelative() string {
+func gitRelativeDir() string {
 	repoPath := gitRepo()
 	if repoPath == "" {
 		s, _ := relativeToHome()

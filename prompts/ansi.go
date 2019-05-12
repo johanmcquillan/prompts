@@ -30,6 +30,16 @@ func MakeAnsiColour(colour AnsiColour) *AnsiFormat {
 	}
 }
 
+func (a *AnsiFormat) SetBold() *AnsiFormat {
+	a.Bold = true
+	return a
+}
+
+func (a *AnsiFormat) UnsetBold() *AnsiFormat {
+	a.Bold = false
+	return a
+}
+
 func (a *AnsiFormat) Format(text string) string {
 	if a == nil {
 		return text

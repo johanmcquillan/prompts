@@ -1,9 +1,6 @@
 package main
 
-import (
-    "fmt"
-    "prompts"
-)
+import "github.com/johanmcquillan/prompts/prompts"
 
 const (
     envMachine     = "MACHINE"
@@ -13,12 +10,23 @@ const (
 )
 
 func main() {
-    prompt := prompts.
+    prompts.
         MakePrompt().
-        WithComponent(prompts.MakeUserComponent()).
-        WithEnvVar(envMachine).
-        WithComponent(prompts.MakeRelativeWDComponent()).
-        WithComponent(prompts.MakeGitBranchComponent())
-
-    fmt.Print(prompt)
+        WithComponent(
+            prompts.
+                MakeUserComponent().
+                WithFormatter(prompts.MakeAnsiColour(88).SetBold())).
+        WithComponent(
+            prompts.
+                MakeEnvComponent(envMachine).
+                WithFormatter(prompts.MakeAnsiColour(214).SetBold())).
+        WithComponent(
+            prompts.
+                MakeGitRelativeDirComponent().
+                WithFormatter(prompts.MakeAnsiColour(69).SetBold())).
+        WithComponent(
+            prompts.
+                MakeGitBranchComponent().
+                WithFormatter(prompts.MakeAnsiColour(1).SetBold())).
+        Print()
 }
