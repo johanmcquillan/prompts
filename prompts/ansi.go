@@ -12,10 +12,11 @@ const (
 	ansiSeparator = ";"
 )
 
-type AnsiColour int
+type AnsiColour uint8
 
 const (
-	RED   AnsiColour = iota +1
+	BLACK   AnsiColour = iota
+	RED
 	GREEN
 	YELLOW
 	BLUE
@@ -27,14 +28,15 @@ const (
 )
 
 type AnsiFormat struct {
-	Colour AnsiColour
-	Bold bool
+	Colour *AnsiColour
+	Bold   bool
 	Italic bool
 }
 
 func MakeAnsiColour(colour AnsiColour) *AnsiFormat {
+	c := colour
 	return &AnsiFormat{
-		Colour: colour,
+		Colour: &c,
 	}
 }
 
@@ -60,8 +62,8 @@ func (a *AnsiFormat) begin() string {
 	if a.Bold {
 		formats = append(formats, "1")
 	}
-	if a.Colour > 0 {
-		formats = append(formats, fmt.Sprintf("38;5;%dm", a.Colour))
+	if a.Colour != nil {
+		formats = append(formats, fmt.Sprintf("38;5;%dm", *a.Colour))
 	}
 	return ansiOpener + strings.Join(formats, ansiSeparator) + ansiCloser
 }
