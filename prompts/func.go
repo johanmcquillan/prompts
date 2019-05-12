@@ -16,7 +16,7 @@ func (c *FunctionalComponent) GenerateElement() Element {
 	if c.Formatter == nil {
 		return Element{rawValue, len(rawValue)}
 	}
-	return Element{c.Colourise(rawValue), len(rawValue)}
+	return Element{c.Format(rawValue), len(rawValue)}
 }
 
 func (c *FunctionalComponent) WithFormatter(formatter Formatter) *FunctionalComponent {

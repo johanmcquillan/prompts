@@ -46,7 +46,7 @@ func (c *EnvComponent) GenerateElement() Element {
 		return Element{rawValue, len(rawValue)}
 	}
 
-	return Element{c.Colourise(rawValue), len(rawValue)}
+	return Element{c.Format(rawValue), len(rawValue)}
 }
 
 

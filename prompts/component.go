@@ -11,5 +11,5 @@ type Component interface {
 }
 
 type Formatter interface {
-	Colourise(string) string
+	Format(string) string
 }

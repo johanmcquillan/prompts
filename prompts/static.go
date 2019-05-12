@@ -15,7 +15,7 @@ func (c *StaticComponent) GenerateElement() Element {
 	if c.Formatter == nil {
 		return Element{c.Value, len(c.Value)}
 	}
-	return Element{c.Colourise(c.Value), len(c.Value)}
+	return Element{c.Format(c.Value), len(c.Value)}
 }
 
 func (c *StaticComponent) WithFormatter(formatter Formatter) *StaticComponent {
