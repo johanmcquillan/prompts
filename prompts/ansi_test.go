@@ -16,7 +16,7 @@ func TestAnsi(t *testing.T) {
 			Value: rawString,
 		}
 
-		actualElement := cmp.GenerateElement()
+		actualElement := cmp.MakeElement()
 		expectedElement := Element{rawString, expectedLength}
 
 		assert.Equal(t, expectedElement, actualElement)
@@ -34,7 +34,7 @@ func TestAnsi(t *testing.T) {
 
 		expectedString := fmt.Sprintf(`\[\e[38;5;%dm\]%s\[\e[m\]`, colour, rawString)
 		expectedElement := Element{expectedString, expectedLength}
-		actualElement := cmp.GenerateElement()
+		actualElement := cmp.MakeElement()
 
 		assert.Equal(t, expectedElement, actualElement)
 	})

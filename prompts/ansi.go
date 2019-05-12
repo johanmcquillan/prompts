@@ -30,7 +30,7 @@ func MakeAnsiColour(colour AnsiColour) *AnsiFormat {
 	}
 }
 
-func (a *AnsiFormat) Colourise(text string) string {
+func (a *AnsiFormat) Format(text string) string {
 	if a == nil {
 		return text
 	}

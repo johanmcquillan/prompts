@@ -39,7 +39,7 @@ func MakeFullWDComponent() *EnvComponent {
 	return MakeEnvComponent(envPWD)
 }
 
-func (c *EnvComponent) GenerateElement() Element {
+func (c *EnvComponent) MakeElement() Element {
 	rawValue := c.GetEnv(c.envVar)
 
 	if c.Formatter == nil {

@@ -11,7 +11,7 @@ func MakeStaticComponent(value string) *StaticComponent {
 	}
 }
 
-func (c *StaticComponent) GenerateElement() Element {
+func (c *StaticComponent) MakeElement() Element {
 	if c.Formatter == nil {
 		return Element{c.Value, len(c.Value)}
 	}
