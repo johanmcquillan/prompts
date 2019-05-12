@@ -20,16 +20,21 @@ func MakeFullWDComponent() *EnvComponent {
 func MakeRelativeWDComponent() *FunctionalComponent {
 	return &FunctionalComponent{
 		function: func() string {
-			return substitutePathPrefix(os.Getenv(envHome), os.Getenv(envPWD), homeSymbol)
+			s, _ := relativeToHome()
+			return s
 		},
 	}
 }
 
-func substitutePathPrefix(prefixPath, fullPath, substitution string) string {
+func relativeToHome() (string, bool) {
+	return substitutePathPrefix(os.Getenv(envHome), os.Getenv(envPWD), homeSymbol)
+}
+
+func substitutePathPrefix(prefixPath, fullPath, substitution string) (string, bool) {
 	relativePath, err := filepath.Rel(prefixPath, fullPath)
 	if err != nil || strings.Contains(relativePath, upOne) {
-		return fullPath
+		return fullPath, false
 	}
 
-	return filepath.Join(substitution, relativePath)
+	return filepath.Join(substitution, relativePath), true
 }

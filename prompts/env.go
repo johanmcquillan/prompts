@@ -31,6 +31,13 @@ func MakeEnvComponent(envVar string) *EnvComponent {
 	}
 }
 
+func MakeUserComponent() *EnvComponent {
+	return &EnvComponent{
+		envFetcher: ActualEnv{},
+		envVar: envUser,
+	}
+}
+
 func (c *EnvComponent) WithFormatter(formatter Formatter) *EnvComponent {
 	c.Formatter = formatter
 	return c
