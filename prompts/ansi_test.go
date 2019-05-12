@@ -23,12 +23,12 @@ func TestAnsi(t *testing.T) {
 	})
 
 	t.Run("Colour", func(t *testing.T) {
-		colour := 1
+		colour := AnsiColour(1)
 
 		cmp := &StaticComponent{
 			Value: rawString,
 			Formatter: &AnsiFormat{
-				Colour: AnsiColour(colour),
+				Colour: &colour,
 			},
 		}
 

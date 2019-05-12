@@ -18,8 +18,8 @@ const (
 type Prompt struct {
 	Opts
 	Ender
-	Components        []Component
-	Separator         string
+	Components []Component
+	Separator  string
 }
 
 func MakePrompt() *Prompt {

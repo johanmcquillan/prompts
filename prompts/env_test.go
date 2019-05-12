@@ -1,8 +1,9 @@
 package prompts
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type testEnvFetcher map[string]string
