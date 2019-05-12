@@ -2,6 +2,7 @@ package prompts
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/jessevdk/go-flags"
@@ -16,7 +17,6 @@ const (
 )
 
 type Prompt struct {
-	Opts
 	PromptState
 	Ender
 	Components []Component
@@ -24,6 +24,7 @@ type Prompt struct {
 }
 
 type PromptState struct {
+	Opts
 	CurrentLength int
 }
 
@@ -49,9 +50,9 @@ func (p *Prompt) PrintWithExitCode(exitCode int) string {
 func (p *Prompt) String(exitCode int) (output string) {
 	defer func() {
 		// Recover and return a fall back prompt
-		if err := recover(); err != nil {
+		if r := recover(); r != nil {
 			if p.NoRecover {
-				panic(err)
+				panic(r)
 			}
 		output = p.getFallBack()
 		}
@@ -61,6 +62,7 @@ func (p *Prompt) String(exitCode int) (output string) {
 	var dynamicComponents []*DynamicComponent
 	for _, component := range p.Components {
 		if dComponent, ok := component.(*DynamicComponent); ok {
+			// We must evaluate DynamicComponents last
 			e := Element{}
 			elements = append(elements, &e)
 			unresolvedElements = append(unresolvedElements, &e)
@@ -104,6 +106,8 @@ func (p *Prompt) WithEnder(e Ender) *Prompt {
 }
 
 func (p *Prompt) ParseArgs() *Prompt {
+	defer recoverFromHelpError()
+
 	p.Opts = Opts{}
 	_, err := flags.Parse(&p.Opts)
 	if err != nil {
@@ -114,6 +118,8 @@ func (p *Prompt) ParseArgs() *Prompt {
 }
 
 func (p *Prompt) WithArgs(args []string) *Prompt {
+	defer recoverFromHelpError()
+
 	p.Opts = Opts{}
 	_, err := flags.ParseArgs(&p.Opts, args)
 	if err != nil {
@@ -133,4 +139,14 @@ func (p *Prompt) getFallBack() string {
 		return defaultFallBack
 	}
 	return p.FallBack
+}
+
+func recoverFromHelpError() {
+	if r := recover(); r != nil {
+		if err, ok := r.(*flags.Error); ok && err.Type == flags.ErrHelp {
+			os.Exit(0)
+		} else {
+			panic(r)
+		}
+	}
 }

@@ -1,6 +1,9 @@
 package main
 
-import "github.com/johanmcquillan/prompts/prompts"
+import (
+    "fmt"
+    "github.com/johanmcquillan/prompts/prompts"
+)
 
 const (
     envMachine     = "MACHINE"
@@ -33,6 +36,11 @@ func main() {
                 MakeBinaryEnder(
                     "$", nil,
                     "$", prompts.MakeAnsiColour(prompts.RED))).
+        WithDynamicComponent(
+            prompts.
+                MakeDynamicComponent(func(p *prompts.PromptState) string {
+                    return fmt.Sprintf("%d", p.CurrentLength)
+                })).
         ParseArgs().
         Print()
 }
