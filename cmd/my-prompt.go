@@ -2,6 +2,7 @@ package main
 
 import (
     "github.com/johanmcquillan/prompts/src/git"
+    "github.com/johanmcquillan/prompts/src/k8s"
     "github.com/johanmcquillan/prompts/src/prompts"
 )
 
@@ -31,6 +32,10 @@ func main() {
             git.
                 MakeGitBranchComponent().
                 WithFormatter(prompts.MakeAnsiColour(90).SetBold())).
+        WithComponent(
+            k8s.
+                MakeK8sContextComponent().
+                WithFormatter(prompts.MakeAnsiColour(22).SetBold())).
         WithEnder(
             prompts.
                 MakeBinaryEnder(
