@@ -41,7 +41,7 @@ func main() {
 			prompts.
 				MakeBinaryEnder(
 					"$", nil,
-					"$", ansi.MakeANSIColour(ansi.Red))).
+					"$", ansi.MakeANSIColour(ansi.RED))).
 		ParseArgs().
 		Print()
 }

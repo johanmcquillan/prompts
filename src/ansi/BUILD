@@ -14,7 +14,8 @@ go_test(
         ['*_test.go'],
     ),
     deps = [
-        ":prompts",
+        ":ansi",
+        "//src/prompts",
         "//third_party:testify",
     ],
     visibility = ['PUBLIC'],

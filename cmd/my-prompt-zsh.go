@@ -41,7 +41,7 @@ func main() {
 			prompts.
 				MakeBinaryEnder(
 					`$`, nil,
-					`$`, zsh.MakeZSHColour(zsh.Red))).
+					`$`, zsh.MakeZSHColour(zsh.RED))).
 		ParseArgs().
 		Print()
 }

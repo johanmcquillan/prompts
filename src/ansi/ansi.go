@@ -15,22 +15,21 @@ const (
 type ANSIColour uint8
 
 const (
-	Black ANSIColour = iota
-	Red
-	Green
-	Yellow
-	Blue
-	Magenta
-	Cyan
-	LightGrey
-	DarkGrey
-	White = 15
+	BLACK ANSIColour = iota
+	RED
+	GREEN
+	YELLOW
+	BLUE
+	MAGENTA
+	CYAN
+	LIGHTGREY
+	DARKGREY
+	WHITE = 15
 )
 
 type ANSIFormat struct {
 	Colour *ANSIColour
 	Bold   bool
-	Italic bool
 }
 
 func MakeANSIColour(colour ANSIColour) *ANSIFormat {

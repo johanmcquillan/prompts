@@ -7,14 +7,14 @@ import (
 type ZSHColour uint8
 
 const (
-	Black ZSHColour = iota
-	Red
-	Green
-	Yellow
-	Blue
-	Magenta
-	Cyan
-	White
+	BLACK ZSHColour = iota
+	RED
+	GREEN
+	YELLOW
+	BLUE
+	MAGENTA
+	CYAN
+	WHITE
 )
 
 type ZSHFormat struct {
