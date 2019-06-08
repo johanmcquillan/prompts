@@ -1,10 +1,12 @@
-package prompts
+package ansi
 
 import (
 	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"github.com/johanmcquillan/prompts/src/prompts"
 )
 
 func TestAnsi(t *testing.T) {
@@ -12,28 +14,28 @@ func TestAnsi(t *testing.T) {
 	expectedLength := len(rawString)
 
 	t.Run("NoFormatting", func(t *testing.T) {
-		cmp := &StaticComponent{
+		cmp := &prompts.StaticComponent{
 			Value: rawString,
 		}
 
 		actualElement := cmp.MakeElement()
-		expectedElement := Element{rawString, expectedLength}
+		expectedElement := prompts.Element{rawString, expectedLength}
 
 		assert.Equal(t, expectedElement, actualElement)
 	})
 
 	t.Run("Colour", func(t *testing.T) {
-		colour := AnsiColour(1)
+		colour := ANSIColour(1)
 
-		cmp := &StaticComponent{
+		cmp := &prompts.StaticComponent{
 			Value: rawString,
-			Formatter: &AnsiFormat{
+			Formatter: &ANSIFormat{
 				Colour: &colour,
 			},
 		}
 
 		expectedString := fmt.Sprintf(`\[\e[38;5;%dm\]%s\[\e[m\]`, colour, rawString)
-		expectedElement := Element{expectedString, expectedLength}
+		expectedElement := prompts.Element{expectedString, expectedLength}
 		actualElement := cmp.MakeElement()
 
 		assert.Equal(t, expectedElement, actualElement)
