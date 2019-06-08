@@ -39,34 +39,34 @@ func MakeANSIColour(colour ANSIColour) *ANSIFormat {
 	}
 }
 
-func (a *ANSIFormat) SetBold() *ANSIFormat {
-	a.Bold = true
-	return a
+func (f *ANSIFormat) SetBold() *ANSIFormat {
+	f.Bold = true
+	return f
 }
 
-func (a *ANSIFormat) UnsetBold() *ANSIFormat {
-	a.Bold = false
-	return a
+func (f *ANSIFormat) UnsetBold() *ANSIFormat {
+	f.Bold = false
+	return f
 }
 
-func (a *ANSIFormat) Format(text string) string {
-	if a == nil {
+func (f *ANSIFormat) Format(text string) string {
+	if f == nil {
 		return text
 	}
-	return a.begin() + text + a.end()
+	return f.begin() + text + f.end()
 }
 
-func (a *ANSIFormat) begin() string {
+func (f *ANSIFormat) begin() string {
 	var formats []string
-	if a.Bold {
+	if f.Bold {
 		formats = append(formats, "1")
 	}
-	if a.Colour != nil {
-		formats = append(formats, fmt.Sprintf("38;5;%dm", *a.Colour))
+	if f.Colour != nil {
+		formats = append(formats, fmt.Sprintf("38;5;%dm", *f.Colour))
 	}
 	return ansiOpener + strings.Join(formats, ansiSeparator)
 }
 
-func (a *ANSIFormat) end() string {
+func (f *ANSIFormat) end() string {
 	return ansiReset
 }
