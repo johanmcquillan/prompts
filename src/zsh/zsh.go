@@ -63,5 +63,7 @@ func (f *ZSHFormat) Format(text string) string {
 		output += "%b"
 	}
 
+	output += "%}"
+
 	return output
 }
