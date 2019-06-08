@@ -6,16 +6,16 @@ import (
 )
 
 const (
-	ansiOpener = `\[\e[`
-	ansiCloser = `\]`
-	ansiReset = `\[\e[m\]`
+	ansiOpener    = `\033[`
+	ansiCloser    = ``
+	ansiReset     = `\033[m`
 	ansiSeparator = ";"
 )
 
 type AnsiColour uint8
 
 const (
-	BLACK   AnsiColour = iota
+	BLACK AnsiColour = iota
 	RED
 	GREEN
 	YELLOW
@@ -24,7 +24,7 @@ const (
 	CYAN
 	LIGHT_GREY
 	DARK_GREY
-	WHITE           = 15
+	WHITE = 15
 )
 
 type AnsiFormat struct {
