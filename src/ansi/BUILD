@@ -18,5 +18,4 @@ go_test(
         "//src/prompts",
         "//third_party:testify",
     ],
-    visibility = ['PUBLIC'],
 )
