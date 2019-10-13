@@ -12,10 +12,12 @@ const (
 	defaultEnder     = "$"
 	defaultSeparator = ":"
 	defaultPanicMsg  = "<Prompt panicked!>"
+
 	// Upon a panic, this prompt will be used instead
 	defaultFallBack = defaultPanicMsg + defaultEnder + " "
 )
 
+// Prompt contains all the components and configuration for a prompt line.
 type Prompt struct {
 	PromptState
 	Ender
@@ -28,6 +30,7 @@ type PromptState struct {
 	CurrentLength int
 }
 
+// MakePrompt initialises a standard Prompt
 func MakePrompt() *Prompt {
 	return &Prompt{
 		Ender:     MakeStaticEnder(defaultEnder),
@@ -35,18 +38,21 @@ func MakePrompt() *Prompt {
 	}
 }
 
+// Print prints the prompt string to the terminal, using a default exit code of 0
 func (p *Prompt) Print() string {
 	s := p.String(p.ExitCode)
 	fmt.Print(s)
 	return s
 }
 
+// Print prints the prompt string to the terminal
 func (p *Prompt) PrintWithExitCode(exitCode int) string {
 	s := p.String(exitCode)
 	fmt.Print(s)
 	return s
 }
 
+// String returns the prompt string, including formatting escape characters
 func (p *Prompt) String(exitCode int) (output string) {
 	defer func() {
 		if p.NoRecover {
@@ -54,7 +60,7 @@ func (p *Prompt) String(exitCode int) (output string) {
 		}
 
 		// Recover and return a fall back prompt
-		if r := recover(); r != nil {
+		if recover() != nil {
 			output = p.getFallBack()
 		}
 	}()
@@ -68,7 +74,7 @@ func (p *Prompt) String(exitCode int) (output string) {
 			elements = append(elements, &e)
 			unresolvedElements = append(unresolvedElements, &e)
 			dynamicComponents = append(dynamicComponents, dComponent)
-		} else if e := component.MakeElement(); e.Length > 0 {
+		} else if e := component.MakeElement(); e.Length > 0 { // Skip 0 length elements
 			elements = append(elements, &e)
 			p.CurrentLength += e.Length
 		}
