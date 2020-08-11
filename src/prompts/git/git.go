@@ -59,7 +59,7 @@ func gitRelativeDir() string {
 	}
 
 	repoSplit := strings.Split(repoPath, prompts.PathSeparator)
-	repoName := repoSplit[len(repoSplit) - 1]
+	repoName := repoSplit[len(repoSplit)-1]
 
 	s, ok := prompts.SubstitutePathPrefix(repoPath, os.Getenv(prompts.EnvPWD), repoName)
 	if !ok {

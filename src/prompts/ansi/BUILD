@@ -16,6 +16,6 @@ go_test(
     deps = [
         ":ansi",
         "//src/prompts",
-        "//third_party:testify",
+        "//deps:testify",
     ],
 )

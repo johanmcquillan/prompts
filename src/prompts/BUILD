@@ -5,7 +5,7 @@ go_library(
         exclude = ['*_test.go'],
     ),
     deps = [
-        '//third_party:flags',
+        '//deps:flags',
     ],
     visibility = ['PUBLIC'],
 )
@@ -17,7 +17,7 @@ go_test(
     ),
     deps = [
         ":prompts",
-        "//third_party:testify",
+        "//deps:testify",
     ],
     visibility = ['PUBLIC'],
 )
