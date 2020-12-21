@@ -5,5 +5,6 @@ go_library(
     srcs = ['git.go'],
     deps = [
         '//src/prompts',
+        '//src/prompts/env',
     ],
 )

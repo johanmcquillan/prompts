@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/johanmcquillan/prompts/src/prompts"
+	"github.com/johanmcquillan/prompts/src/prompts/env"
 )
 
 func MakeGitBranchComponent() *prompts.FunctionalComponent {
@@ -54,16 +55,16 @@ func gitRepo() string {
 func gitRelativeDir() string {
 	repoPath := gitRepo()
 	if repoPath == "" {
-		s, _ := prompts.RelativeToHome()
+		s, _ := env.RelativeToHome()
 		return s
 	}
 
-	repoSplit := strings.Split(repoPath, prompts.PathSeparator)
+	repoSplit := strings.Split(repoPath, env.PathSeparator)
 	repoName := repoSplit[len(repoSplit)-1]
 
-	s, ok := prompts.SubstitutePathPrefix(repoPath, os.Getenv(prompts.EnvPWD), repoName)
+	s, ok := env.SubstitutePathPrefix(repoPath, os.Getenv(env.EnvPWD), repoName)
 	if !ok {
-		s, _ = prompts.RelativeToHome()
+		s, _ = env.RelativeToHome()
 	}
 
 	return s

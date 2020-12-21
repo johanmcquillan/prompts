@@ -1,6 +1,10 @@
-package prompts
+package env
 
-import "os"
+import (
+	"os"
+
+	"github.com/johanmcquillan/prompts/src/prompts"
+)
 
 const (
 	EnvHome = "HOME"
@@ -14,41 +18,41 @@ type envFetcher interface {
 
 type EnvComponent struct {
 	envFetcher
-	Formatter
+	prompts.Formatter
 	envVar string
 }
 
-type ActualEnv struct {}
+type Env struct{}
 
-func (ActualEnv) GetEnv(envVar string) string {
+func (Env) GetEnv(envVar string) string {
 	return os.Getenv(envVar)
 }
 
 func MakeEnvComponent(envVar string) *EnvComponent {
 	return &EnvComponent{
-		envFetcher: ActualEnv{},
-		envVar: envVar,
+		envFetcher: Env{},
+		envVar:     envVar,
 	}
 }
 
 func MakeUserComponent() *EnvComponent {
 	return &EnvComponent{
-		envFetcher: ActualEnv{},
+		envFetcher: Env{},
 		envVar:     EnvUser,
 	}
 }
 
-func (c *EnvComponent) WithFormatter(formatter Formatter) *EnvComponent {
+func (c *EnvComponent) WithFormatter(formatter prompts.Formatter) *EnvComponent {
 	c.Formatter = formatter
 	return c
 }
 
-func (c *EnvComponent) MakeElement() Element {
+func (c *EnvComponent) MakeElement() prompts.Element {
 	rawValue := c.GetEnv(c.envVar)
 
 	if c.Formatter == nil {
-		return Element{rawValue, len(rawValue)}
+		return prompts.Element{rawValue, len(rawValue)}
 	}
 
-	return Element{c.Format(rawValue), len(rawValue)}
+	return prompts.Element{c.Format(rawValue), len(rawValue)}
 }

@@ -1,8 +1,9 @@
-package prompts
+package env
 
 import (
 	"testing"
 
+	"github.com/johanmcquillan/prompts/src/prompts"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -26,18 +27,17 @@ func TestEnv(t *testing.T) {
 
 	t.Run("Vars", func(t *testing.T) {
 		for envVar := range env {
-			t.Run("$" + envVar, func(t *testing.T) {
+			t.Run("$"+envVar, func(t *testing.T) {
 				cmp := &EnvComponent{
 					envFetcher: env,
 					envVar:     envVar,
 				}
 
 				actualElement := cmp.MakeElement()
-				expectedElement := Element{env[envVar], len(env[envVar])}
+				expectedElement := prompts.Element{env[envVar], len(env[envVar])}
 
 				assert.Equal(t, expectedElement, actualElement)
 			})
 		}
 	})
 }
-

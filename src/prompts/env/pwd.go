@@ -1,9 +1,11 @@
-package prompts
+package env
 
 import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/johanmcquillan/prompts/src/prompts"
 )
 
 const (
@@ -17,8 +19,8 @@ func MakeFullWDComponent() *EnvComponent {
 	return MakeEnvComponent(EnvPWD)
 }
 
-func MakeRelativeWDComponent() *FunctionalComponent {
-	return &FunctionalComponent{
+func MakeRelativeWDComponent() *prompts.FunctionalComponent {
+	return &prompts.FunctionalComponent{
 		Function: func() string {
 			s, _ := RelativeToHome()
 			return s
