@@ -7,9 +7,10 @@ import (
 )
 
 const (
-	EnvHome = "HOME"
-	EnvPWD  = "PWD"
-	EnvUser = "USER"
+	EnvHome  = "HOME"
+	EnvPWD   = "PWD"
+	EnvUser  = "USER"
+	EnvShell = "SHELL"
 )
 
 type envFetcher interface {

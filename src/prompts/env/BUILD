@@ -4,6 +4,7 @@ go_library(
     name = 'env',
     srcs = [
         'env.go',
+        'shell.go',
         'pwd.go',
     ],
     deps = [
