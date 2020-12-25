@@ -6,9 +6,8 @@ import (
 )
 
 const (
-	ansiOpener    = `\[\e[`
-	ansiCloser    = `\]`
-	ansiReset     = `\[\e[m\]`
+	ansiOpener    = `\e[`
+	ansiReset     = `\e[0m`
 	ansiSeparator = ";"
 )
 
@@ -64,7 +63,7 @@ func (f *ANSIFormat) begin() string {
 	if f.Colour != nil {
 		formats = append(formats, fmt.Sprintf("38;5;%dm", *f.Colour))
 	}
-	return ansiOpener + strings.Join(formats, ansiSeparator) + ansiCloser
+	return ansiOpener + strings.Join(formats, ansiSeparator)
 }
 
 func (f *ANSIFormat) end() string {
