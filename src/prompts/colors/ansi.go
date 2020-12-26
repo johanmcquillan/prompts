@@ -6,8 +6,9 @@ import (
 )
 
 const (
-	ansiOpener    = `\e[`
-	ansiReset     = `\e[0m`
+	ansiOpener    = `\[\e[`
+	ansiCloser    = `\]`
+	ansiReset     = `\[\e[m\]`
 	ansiSeparator = ";"
 )
 
@@ -41,7 +42,7 @@ func (f *ShellFormatter) ansiBegin(color ANSIColor) string {
 		formats = append(formats, "1")
 	}
 	formats = append(formats, fmt.Sprintf("38;5;%dm", color))
-	return ansiOpener + strings.Join(formats, ansiSeparator)
+	return ansiOpener + strings.Join(formats, ansiSeparator) + ansiCloser
 }
 
 func  ansiEnd() string {
