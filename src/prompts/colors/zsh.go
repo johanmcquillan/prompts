@@ -1,26 +1,28 @@
 package colors
 
 import (
-	"fmt"
+	"strconv"
+	"strings"
 )
 
 func (f *ShellFormatter) zshFormat(text string) string {
-	output := "%{"
+	sb := &strings.Builder{}
+	sb.WriteString("%{")
 	if f.Bold {
-		output += "%B"
+		sb.WriteString("%B")
 	}
 
-	output += "%F{" + fmt.Sprintf("%d", f.Color) + "}"
+	sb.WriteString("%F{")
+	sb.WriteString(strconv.Itoa(int(f.Color)))
+	sb.WriteString("}%}")
 
-	output += text
+	sb.WriteString(text)
 
-	output += "%f"
-
+	sb.WriteString("%{%f")
 	if f.Bold {
-		output += "%b"
+		sb.WriteString("%b")
 	}
+	sb.WriteString("%}")
 
-	output += "%}"
-
-	return output
+	return sb.String()
 }
