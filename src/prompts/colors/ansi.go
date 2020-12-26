@@ -12,39 +12,22 @@ const (
 	ansiSeparator = ";"
 )
 
-type ANSIColor uint8
-
-const (
-	ANSIBlack ANSIColor = iota
-	ANSIRed
-	ANSIGreen
-	ANSIYellow
-	ANSIBlue
-	ANSIMagenta
-	ANSICyan
-	ANSILightGrey
-	ANSIDarkGrey
-	ANSIWhite = 15
-)
-
-func (ANSIColor) isShellColor() {}
-
-func (f *ShellFormatter) ansiFormat(color ANSIColor, text string) string {
+func (f *ShellFormatter) ansiFormat( text string) string {
 	if f == nil {
 		return text
 	}
-	return f.ansiBegin(color) + text + ansiEnd()
+	return f.ansiBegin() + text + ansiEnd()
 }
 
-func (f *ShellFormatter) ansiBegin(color ANSIColor) string {
+func (f *ShellFormatter) ansiBegin() string {
 	var formats []string
 	if f.Bold {
 		formats = append(formats, "1")
 	}
-	formats = append(formats, fmt.Sprintf("38;5;%dm", color))
+	formats = append(formats, fmt.Sprintf("38;5;%dm", f.Color))
 	return ansiOpener + strings.Join(formats, ansiSeparator) + ansiCloser
 }
 
-func  ansiEnd() string {
+func ansiEnd() string {
 	return ansiReset
 }

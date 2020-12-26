@@ -6,6 +6,7 @@ go_library(
         "ansi.go",
         "colors.go",
         "zsh.go",
+        "shell.go",
     ],
     deps = [
         "//src/prompts",

@@ -1,16 +1,30 @@
 package colors
 
-type ShellColor interface {
-	isShellColor()
-}
+type Color uint8
+
+const (
+	Black Color = iota
+	Red
+	Green
+	Yellow
+	Blue
+	Magenta
+	Cyan
+	LightGrey
+	DarkGrey
+	White = 15
+)
 
 type ShellFormatter struct {
-	Color ShellColor
+	Type  ShellType
+	Color Color
 	Bold  bool
 }
 
-func MakeShellFormatter(color ShellColor) *ShellFormatter {
+func NewShellFormatter(color Color) *ShellFormatter {
+	// This is imperfect as it oly fetches the default shell, not the current shell.
 	return &ShellFormatter{
+		Type:  getShellType(),
 		Color: color,
 	}
 }
@@ -20,16 +34,21 @@ func (f *ShellFormatter) SetBold(b bool) *ShellFormatter {
 	return f
 }
 
+func (f *ShellFormatter) SetShellType(shellType ShellType) *ShellFormatter {
+	f.Type = shellType
+	return f
+}
+
 func (f *ShellFormatter) Format(text string) string {
 	if f == nil {
 		return text
 	}
 
-	switch color := f.Color.(type) {
-	case ANSIColor:
-		return f.ansiFormat(color, text)
-	case ZSHColor:
-		return f.zshFormat(color, text)
+	switch f.Type {
+	case BASH:
+		return f.ansiFormat(text)
+	case ZSH:
+		return f.zshFormat(text)
 	default:
 		// Unknown color type.
 		// We could panic here, but safer to just return the plain string for now.

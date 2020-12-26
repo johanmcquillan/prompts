@@ -25,11 +25,12 @@ func TestANSI(t *testing.T) {
 	})
 
 	t.Run("Color", func(t *testing.T) {
-		color := ANSIColor(1)
+		color := Color(1)
 
 		cmp := &prompts.StaticComponent{
 			Value: rawString,
 			Formatter: &ShellFormatter{
+				Type: BASH,
 				Color: color,
 			},
 		}
