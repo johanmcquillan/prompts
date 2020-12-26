@@ -1,6 +1,7 @@
 package env
 
 import (
+	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
@@ -40,7 +41,8 @@ func (c *ShellComponent) MakeElement() prompts.Element {
 }
 
 func GetShell() string {
-	output, err := exec.Command("ps", "-p", "$$", "-o", "command=").Output()
+
+	output, err := exec.Command("ps", "-o", "command=", "-p", fmt.Sprintf("%d", os.Getppid())).Output()
 	if err != nil {
 		return ""
 	}
