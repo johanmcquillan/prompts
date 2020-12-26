@@ -9,7 +9,7 @@ go_library(
         "shell.go",
     ],
     deps = [
-        "//src/prompts",
+        "//src/prompts/env",
     ],
 )
 

@@ -1,7 +1,9 @@
 package env
 
 import (
+	"os/exec"
 	"path/filepath"
+	"strings"
 
 	"github.com/johanmcquillan/prompts/src/prompts"
 )
@@ -13,8 +15,7 @@ type ShellComponent struct {
 }
 
 func (c *ShellComponent) GetShell() string {
-	shell := c.GetEnv(EnvShell)
-	return filepath.Base(shell)
+	return GetShell()
 }
 
 func MakeShellComponent() *ShellComponent {
@@ -36,4 +37,12 @@ func (c *ShellComponent) MakeElement() prompts.Element {
 	}
 
 	return prompts.Element{c.Format(rawValue), len(rawValue)}
+}
+
+func GetShell() string {
+	output, err := exec.Command("ps", "-p", "$$", "-o", "command=").Output()
+	if err != nil {
+		return ""
+	}
+	return filepath.Base(strings.Trim(strings.TrimSpace(string(output)), "-"))
 }

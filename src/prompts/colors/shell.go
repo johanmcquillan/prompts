@@ -1,9 +1,10 @@
 package colors
 
 import (
-	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/johanmcquillan/prompts/src/prompts/env"
 )
 
 type ShellType string
@@ -25,5 +26,5 @@ func toShellType(s string) ShellType {
 }
 
 func getShellType() ShellType {
-	return toShellType(os.Getenv("SHELL"))
+	return toShellType(env.GetShell())
 }
