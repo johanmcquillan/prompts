@@ -1,4 +1,4 @@
-package ansi
+package colors
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 	"github.com/johanmcquillan/prompts/src/prompts"
 )
 
-func TestAnsi(t *testing.T) {
+func TestANSI(t *testing.T) {
 	rawString := "Hello World"
 	expectedLength := len(rawString)
 
@@ -24,17 +24,17 @@ func TestAnsi(t *testing.T) {
 		assert.Equal(t, expectedElement, actualElement)
 	})
 
-	t.Run("Colour", func(t *testing.T) {
-		colour := ANSIColour(1)
+	t.Run("Color", func(t *testing.T) {
+		color := ANSIColor(1)
 
 		cmp := &prompts.StaticComponent{
 			Value: rawString,
-			Formatter: &ANSIFormat{
-				Colour: &colour,
+			Formatter: &ShellFormatter{
+				Color: color,
 			},
 		}
 
-		expectedString := fmt.Sprintf(`\[\e[38;5;%dm\]%s\[\e[m\]`, colour, rawString)
+		expectedString := fmt.Sprintf(`\[\e[38;5;%dm\]%s\[\e[m\]`, color, rawString)
 		expectedElement := prompts.Element{expectedString, expectedLength}
 		actualElement := cmp.MakeElement()
 
