@@ -86,14 +86,16 @@ func (p *Prompt) String(exitCode int) (output string) {
 		p.CurrentLength += e.Length
 	}
 
-	var subStrings []string
+	sb := &strings.Builder{}
 	for _, e := range elements {
 		if e != nil && e.Length > 0 {
-			subStrings = append(subStrings, e.Output)
+			sb.WriteString(e.Output)
 		}
 	}
+	sb.WriteString(p.End(exitCode).Output)
+	sb.WriteString(" ")
 
-	return fmt.Sprintf("%s%s ", strings.Join(subStrings, p.Separator), p.End(exitCode).Output)
+	return sb.String()
 }
 
 func (p *Prompt) WithComponent(c Component) *Prompt {
