@@ -87,10 +87,19 @@ func (p *Prompt) String(exitCode int) (output string) {
 	}
 
 	sb := &strings.Builder{}
-	for _, e := range elements {
-		if e != nil && e.Length > 0 {
-			sb.WriteString(e.Output)
+	var prevElement *Element
+	for _, element := range elements {
+		if element == nil || element.Length > 0 {
+			continue
 		}
+		if element.separator {
+			if prevElement != nil && prevElement.Length > 0 {
+				sb.WriteString(element.Output)
+			}
+			continue
+		}
+		sb.WriteString(element.Output)
+		prevElement = element
 	}
 	sb.WriteString(p.End(exitCode).Output)
 	sb.WriteString(" ")
@@ -104,7 +113,16 @@ func (p *Prompt) WithComponent(c Component) *Prompt {
 }
 
 func (p *Prompt) WithSeparator() *Prompt {
-	return p.WithComponent(MakeStaticComponent(p.Separator))
+	if len(p.Components) == 0 {
+		return p
+	}
+	if c, ok := p.Components[len(p.Components)-1].(*StaticComponent); ok && c.separator {
+		return p
+	}
+
+	c := MakeStaticComponent(p.Separator)
+	c.separator = true
+	return p.WithComponent(c)
 }
 
 func (p *Prompt) WithDynamicComponent(c *DynamicComponent) *Prompt {

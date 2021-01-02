@@ -34,7 +34,10 @@ func TestEnv(t *testing.T) {
 				}
 
 				actualElement := cmp.MakeElement()
-				expectedElement := prompts.Element{env[envVar], len(env[envVar])}
+				expectedElement := prompts.Element{
+					Output: env[envVar],
+					Length: len(env[envVar]),
+				}
 
 				assert.Equal(t, expectedElement, actualElement)
 			})

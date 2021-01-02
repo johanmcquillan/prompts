@@ -24,19 +24,31 @@ func MakeFunctionalEnder(f func(int) (string, Formatter)) *FunctionalEnder {
 
 func (e *StaticEnder) End(int) Element {
 	if e.Formatter == nil {
-		return Element{e.Symbol, len(e.Symbol)}
+		return Element{
+			Output: e.Symbol,
+			Length: len(e.Symbol),
+		}
 	}
-	return Element{e.Format(e.Symbol), len(e.Symbol)}
+	return Element{
+		Output: e.Format(e.Symbol),
+		Length: len(e.Symbol),
+	}
 }
 
 func (e *FunctionalEnder) End(exitCode int) Element {
 	s, f := e.Function(exitCode)
 
 	if f == nil {
-		return Element{s, len(s)}
+		return Element{
+			Output: s,
+			Length: len(s),
+		}
 	}
 
-	return Element{f.Format(s), len(s)}
+	return Element{
+		Output: f.Format(s),
+		Length: len(s),
+	}
 }
 
 func MakeBinaryEnder(successSymbol string, successFormat Formatter, failSymbol string, failFormat Formatter) *FunctionalEnder {

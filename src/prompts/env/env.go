@@ -52,8 +52,14 @@ func (c *EnvComponent) MakeElement() prompts.Element {
 	rawValue := c.GetEnv(c.envVar)
 
 	if c.Formatter == nil {
-		return prompts.Element{rawValue, len(rawValue)}
+		return prompts.Element{
+			Output: rawValue,
+			Length: len(rawValue),
+		}
 	}
 
-	return prompts.Element{c.Format(rawValue), len(rawValue)}
+	return prompts.Element{
+		Output: c.Format(rawValue),
+		Length: len(rawValue),
+	}
 }

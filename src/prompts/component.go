@@ -3,6 +3,8 @@ package prompts
 type Element struct {
 	Output string
 	Length int
+
+	separator bool
 }
 
 type Component interface {

@@ -19,7 +19,10 @@ func TestANSI(t *testing.T) {
 		}
 
 		actualElement := cmp.MakeElement()
-		expectedElement := prompts.Element{rawString, expectedLength}
+		expectedElement := prompts.Element{
+			Output: rawString,
+			Length: expectedLength,
+		}
 
 		assert.Equal(t, expectedElement, actualElement)
 	})
@@ -30,13 +33,16 @@ func TestANSI(t *testing.T) {
 		cmp := &prompts.StaticComponent{
 			Value: rawString,
 			Formatter: &ShellFormatter{
-				Type: BASH,
+				Type:  BASH,
 				Color: color,
 			},
 		}
 
 		expectedString := fmt.Sprintf(`\[\e[38;5;%dm\]%s\[\e[m\]`, color, rawString)
-		expectedElement := prompts.Element{expectedString, expectedLength}
+		expectedElement := prompts.Element{
+			Output: expectedString,
+			Length: expectedLength,
+		}
 		actualElement := cmp.MakeElement()
 
 		assert.Equal(t, expectedElement, actualElement)

@@ -19,7 +19,13 @@ func (c *FunctionalComponent) WithFormatter(formatter Formatter) *FunctionalComp
 func (c *FunctionalComponent) MakeElement() Element {
 	rawValue := c.Function()
 	if c.Formatter == nil {
-		return Element{rawValue, len(rawValue)}
+		return Element{
+			Output: rawValue,
+			Length: len(rawValue),
+		}
 	}
-	return Element{c.Format(rawValue), len(rawValue)}
+	return Element{
+		Output: c.Format(rawValue),
+		Length: len(rawValue),
+	}
 }

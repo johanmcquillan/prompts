@@ -25,7 +25,13 @@ func (c *DynamicComponent) WithFormatter(formatter Formatter) *DynamicComponent 
 func (c *DynamicComponent) MakeElement() Element {
 	rawValue := c.Function(c.PromptState)
 	if c.Formatter == nil {
-		return Element{rawValue, len(rawValue)}
+		return Element{
+			Output: rawValue,
+			Length: len(rawValue),
+		}
 	}
-	return Element{c.Format(rawValue), len(rawValue)}
+	return Element{
+		Output: c.Format(rawValue),
+		Length: len(rawValue),
+	}
 }
