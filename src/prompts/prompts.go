@@ -101,6 +101,10 @@ func (p *Prompt) WithComponent(c Component) *Prompt {
 	return p
 }
 
+func (p *Prompt) WithSeparator() *Prompt {
+	return p.WithComponent(MakeStaticComponent(p.Separator))
+}
+
 func (p *Prompt) WithDynamicComponent(c *DynamicComponent) *Prompt {
 	c.PromptState = &p.PromptState
 	p.Components = append(p.Components, c)
