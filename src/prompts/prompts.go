@@ -89,7 +89,7 @@ func (p *Prompt) String(exitCode int) (output string) {
 	sb := &strings.Builder{}
 	var prevElement *Element
 	for _, element := range elements {
-		if element == nil || element.Length > 0 {
+		if element == nil || element.Length == 0 {
 			continue
 		}
 		if element.separator {
