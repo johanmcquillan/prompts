@@ -19,7 +19,7 @@ go_test(
     ],
     deps = [
         ":env",
-        "//deps:testify",
+        "//third_party:testify",
         "//src/prompts",
     ],
 )

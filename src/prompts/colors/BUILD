@@ -20,7 +20,7 @@ go_test(
     ],
     deps = [
         ":colors",
-        "//deps:testify",
+        "//third_party:testify",
         "//src/prompts",
     ],
 )

@@ -11,6 +11,6 @@ go_library(
     ],
     visibility = ["PUBLIC"],
     deps = [
-        "//deps:flags",
+        "//third_party:flags",
     ],
 )
