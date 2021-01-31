@@ -5,8 +5,8 @@ go_library(
     srcs = [
         "ansi.go",
         "colors.go",
-        "zsh.go",
         "shell.go",
+        "zsh.go",
     ],
     deps = [
         "//src/prompts/env",
@@ -20,7 +20,7 @@ go_test(
     ],
     deps = [
         ":colors",
-        "//src/prompts",
         "//deps:testify",
+        "//src/prompts",
     ],
 )

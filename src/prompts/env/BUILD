@@ -1,25 +1,25 @@
-package(default_visibility = ['PUBLIC'])
+package(default_visibility = ["PUBLIC"])
 
 go_library(
-    name = 'env',
+    name = "env",
     srcs = [
-        'env.go',
-        'shell.go',
-        'pwd.go',
+        "env.go",
+        "pwd.go",
+        "shell.go",
     ],
     deps = [
-        '//src/prompts',
+        "//src/prompts",
     ],
 )
 
 go_test(
-    name = 'test',
+    name = "test",
     srcs = [
-        'env_test.go',
+        "env_test.go",
     ],
     deps = [
         ":env",
-        "//src/prompts",
         "//deps:testify",
+        "//src/prompts",
     ],
 )

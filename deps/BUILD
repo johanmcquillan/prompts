@@ -7,12 +7,12 @@ go_get(
         "assert",
         "require",
     ],
+    revision = "v1.6.1",
     deps = [
-        ":spew",
         ":difflib",
+        ":spew",
         ":yaml",
     ],
-    revision = "v1.6.1",
 )
 
 go_get(
@@ -35,10 +35,10 @@ go_get(
 go_get(
     name = "flags",
     get = "github.com/jessevdk/go-flags",
+    revision = "v1.4.0",
     deps = [
         ":x-sys",
     ],
-    revision = "v1.4.0",
 )
 
 go_get(
