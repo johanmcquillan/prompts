@@ -35,7 +35,7 @@ go_get(
 go_get(
     name = "flags",
     get = "github.com/jessevdk/go-flags",
-    revision = "v1.4.0",
+    revision = "8766aaeab5ca44d0eceae49614346e28ab11c439",
     deps = [
         ":x-sys",
     ],
