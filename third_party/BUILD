@@ -1,13 +1,13 @@
 package(default_visibility = ["PUBLIC"])
 
-go_get(
+go_module(
     name = "testify",
-    get = "github.com/stretchr/testify",
     install = [
         "assert",
         "require",
     ],
-    revision = "v1.6.1",
+    module = "github.com/stretchr/testify",
+    version = "v1.6.1",
     deps = [
         ":difflib",
         ":spew",
@@ -15,36 +15,39 @@ go_get(
     ],
 )
 
-go_get(
+go_module(
     name = "spew",
-    get = "github.com/davecgh/go-spew/spew",
-    revision = "v1.1.1",
+    install = ["spew"],
+    module = "github.com/davecgh/go-spew",
+    version = "v1.1.1",
 )
 
-go_get(
+go_module(
     name = "yaml",
-    get = "gopkg.in/yaml.v3",
+    licences = ["Apache 2.0"],
+    module = "gopkg.in/yaml.v3",
+    version = "496545a6307b2a7d7a710fd516e5e16e8ab62dbc",
 )
 
-go_get(
+go_module(
     name = "difflib",
-    get = "github.com/pmezard/go-difflib/difflib",
-    revision = "v1.0.0",
+    install = ["difflib"],
+    module = "github.com/pmezard/go-difflib",
+    version = "v1.0.0",
 )
 
-go_get(
+go_module(
     name = "flags",
-    get = "github.com/jessevdk/go-flags",
-    revision = "v1.4.0",
+    module = "github.com/jessevdk/go-flags",
+    version = "v1.4.0",
     deps = [
         ":x-sys",
     ],
 )
 
-go_get(
+go_module(
     name = "x-sys",
-    get = "golang.org/x/sys",
-    install = [
-        "unix",
-    ],
+    install = ["unix"],
+    module = "golang.org/x/sys",
+    version = "v0.0.0-20210630005230-0f9fa26af87c",
 )
