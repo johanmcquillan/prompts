@@ -74,7 +74,9 @@ func (p *Prompt) String(exitCode int) (output string) {
 			elements = append(elements, &e)
 			unresolvedElements = append(unresolvedElements, &e)
 			dynamicComponents = append(dynamicComponents, dComponent)
-		} else if e := component.MakeElement(); e.Length > 0 { // Skip 0 length elements
+			continue
+		}
+		if e := component.MakeElement(); e.Length > 0 { // Skip 0 length elements
 			elements = append(elements, &e)
 			p.CurrentLength += e.Length
 		}
@@ -90,6 +92,7 @@ func (p *Prompt) String(exitCode int) (output string) {
 	var prevElement *Element
 	for _, element := range elements {
 		if element == nil || element.Length == 0 {
+			prevElement = element
 			continue
 		}
 		if element.separator {
