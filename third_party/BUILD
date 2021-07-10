@@ -41,13 +41,6 @@ go_module(
     module = "github.com/jessevdk/go-flags",
     version = "8766aaeab5ca44d0eceae49614346e28ab11c439",
     deps = [
-        ":x-sys",
+        "//third_party/x:sys",
     ],
-)
-
-go_module(
-    name = "x-sys",
-    install = ["unix"],
-    module = "golang.org/x/sys",
-    version = "v0.0.0-20210630005230-0f9fa26af87c",
 )
