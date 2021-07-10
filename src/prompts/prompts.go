@@ -91,7 +91,6 @@ func (p *Prompt) String(exitCode int) (output string) {
 	sb := &strings.Builder{}
 	var prevElement *Element
 	for i, element := range elements {
-		fmt.Printf("%+v\n", element)
 		if element == nil || element.Length == 0 {
 			prevElement = element
 			continue
