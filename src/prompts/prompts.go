@@ -90,15 +90,21 @@ func (p *Prompt) String(exitCode int) (output string) {
 
 	sb := &strings.Builder{}
 	var prevElement *Element
-	for _, element := range elements {
+	for i, element := range elements {
+		fmt.Printf("%+v\n", element)
 		if element == nil || element.Length == 0 {
 			prevElement = element
 			continue
 		}
 		if element.separator {
-			if prevElement != nil && prevElement.Length > 0 {
+			if i == len(elements)-1 {
+				// Never print separator if last element.
+				continue
+			}
+			if prevElement != nil && prevElement.Length > 0 && !prevElement.separator {
 				sb.WriteString(element.Output)
 			}
+			prevElement = element
 			continue
 		}
 		sb.WriteString(element.Output)
@@ -106,7 +112,6 @@ func (p *Prompt) String(exitCode int) (output string) {
 	}
 	sb.WriteString(p.End(exitCode).Output)
 	sb.WriteString(" ")
-
 	return sb.String()
 }
 
