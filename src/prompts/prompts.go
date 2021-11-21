@@ -65,56 +65,30 @@ func (p *Prompt) String(exitCode int) (output string) {
 		}
 	}()
 
-	var elements []*Element
+	elementStrings := make([]string, 0, len(p.Components))
 	for _, component := range p.Components {
-		if e := component.MakeElement(); e.Length > 0 { // Skip 0 length elements
-			elements = append(elements, &e)
-			p.CurrentLength += e.Length
+		element := component.MakeElement()
+		if element.Length == 0 {
+			// Skip 0 length elements
+			continue
 		}
+		elementStrings = append(elementStrings, element.Output)
+		p.CurrentLength += element.Length
 	}
 
-	sb := &strings.Builder{}
-	var prevElement *Element
-	for i, element := range elements {
-		if element == nil || element.Length == 0 {
-			prevElement = element
-			continue
-		}
-		if element.separator {
-			if i == len(elements)-1 {
-				// Never print separator if last element.
-				continue
-			}
-			if prevElement != nil && prevElement.Length > 0 && !prevElement.separator {
-				sb.WriteString(element.Output)
-			}
-			prevElement = element
-			continue
-		}
-		sb.WriteString(element.Output)
-		prevElement = element
-	}
-	sb.WriteString(p.End(exitCode).Output)
-	sb.WriteString(" ")
-	return sb.String()
+	output = strings.Join(elementStrings, p.Separator)
+	output += p.End(exitCode).Output + " "
+	return output
 }
 
-func (p *Prompt) WithComponent(c Component) *Prompt {
-	p.Components = append(p.Components, c)
+func (p *Prompt) WithComponent(component Component) *Prompt {
+	p.Components = append(p.Components, component)
 	return p
 }
 
-func (p *Prompt) WithSeparator() *Prompt {
-	if len(p.Components) == 0 {
-		return p
-	}
-	if c, ok := p.Components[len(p.Components)-1].(*StaticComponent); ok && c.separator {
-		return p
-	}
-
-	c := MakeStaticComponent(p.Separator)
-	c.separator = true
-	return p.WithComponent(c)
+func (p *Prompt) SetSeparator(separator string) *Prompt {
+	p.Separator = separator
+	return p
 }
 
 func (p *Prompt) WithEnder(e Ender) *Prompt {
