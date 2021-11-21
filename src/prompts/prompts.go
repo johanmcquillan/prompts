@@ -65,27 +65,12 @@ func (p *Prompt) String(exitCode int) (output string) {
 		}
 	}()
 
-	var elements, unresolvedElements []*Element
-	var dynamicComponents []*DynamicComponent
+	var elements []*Element
 	for _, component := range p.Components {
-		if dComponent, ok := component.(*DynamicComponent); ok {
-			// We must evaluate DynamicComponents last
-			e := Element{}
-			elements = append(elements, &e)
-			unresolvedElements = append(unresolvedElements, &e)
-			dynamicComponents = append(dynamicComponents, dComponent)
-			continue
-		}
 		if e := component.MakeElement(); e.Length > 0 { // Skip 0 length elements
 			elements = append(elements, &e)
 			p.CurrentLength += e.Length
 		}
-	}
-
-	for i, dComponent := range dynamicComponents {
-		e := dComponent.MakeElement()
-		*unresolvedElements[i] = e
-		p.CurrentLength += e.Length
 	}
 
 	sb := &strings.Builder{}
@@ -130,12 +115,6 @@ func (p *Prompt) WithSeparator() *Prompt {
 	c := MakeStaticComponent(p.Separator)
 	c.separator = true
 	return p.WithComponent(c)
-}
-
-func (p *Prompt) WithDynamicComponent(c *DynamicComponent) *Prompt {
-	c.PromptState = &p.PromptState
-	p.Components = append(p.Components, c)
-	return p
 }
 
 func (p *Prompt) WithEnder(e Ender) *Prompt {

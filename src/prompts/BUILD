@@ -2,7 +2,6 @@ go_library(
     name = "prompts",
     srcs = [
         "component.go",
-        "dynamic.go",
         "end.go",
         "func.go",
         "opts.go",
