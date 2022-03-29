@@ -39,7 +39,7 @@ go_module(
 go_module(
     name = "flags",
     module = "github.com/jessevdk/go-flags",
-    version = "8766aaeab5ca44d0eceae49614346e28ab11c439",
+    version = "0fb31d3686e2c0afcd5877fcc616a1a09f5727de",
     deps = [
         "//third_party/x:sys",
     ],
