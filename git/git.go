@@ -6,8 +6,8 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/johanmcquillan/prompts/src/prompts"
-	"github.com/johanmcquillan/prompts/src/prompts/env"
+	"github.com/johanmcquillan/prompts/prompts"
+	"github.com/johanmcquillan/prompts/prompts/env"
 )
 
 func MakeGitBranchComponent() *prompts.FunctionalComponent {

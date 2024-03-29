@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/johanmcquillan/prompts/src/prompts"
+	"github.com/johanmcquillan/prompts/prompts"
 )
 
 type ShellComponent struct {

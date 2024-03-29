@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/johanmcquillan/prompts/src/prompts"
+	"github.com/johanmcquillan/prompts/prompts"
 )
 
 func TestANSI(t *testing.T) {

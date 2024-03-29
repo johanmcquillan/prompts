@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/johanmcquillan/prompts/src/prompts"
-	"github.com/johanmcquillan/prompts/src/prompts/colors"
-	"github.com/johanmcquillan/prompts/src/prompts/env"
-	"github.com/johanmcquillan/prompts/src/prompts/git"
-	"github.com/johanmcquillan/prompts/src/prompts/k8s"
+	"github.com/johanmcquillan/prompts/prompts"
+	"github.com/johanmcquillan/prompts/prompts/colors"
+	"github.com/johanmcquillan/prompts/prompts/env"
+	"github.com/johanmcquillan/prompts/prompts/git"
+	"github.com/johanmcquillan/prompts/prompts/k8s"
 )
 
 func main() {
