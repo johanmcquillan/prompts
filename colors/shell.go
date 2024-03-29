@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/johanmcquillan/prompts/prompts/env"
+	"github.com/johanmcquillan/prompts/env"
 )
 
 type ShellType string

@@ -5,7 +5,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/johanmcquillan/prompts/prompts"
+	"github.com/johanmcquillan/prompts"
 )
 
 func MakeK8sContextComponent() *prompts.FunctionalComponent {

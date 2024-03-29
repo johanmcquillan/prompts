@@ -3,7 +3,7 @@ package env
 import (
 	"os"
 
-	"github.com/johanmcquillan/prompts/prompts"
+	"github.com/johanmcquillan/prompts"
 )
 
 const (

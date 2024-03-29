@@ -3,7 +3,7 @@ package env
 import (
 	"testing"
 
-	"github.com/johanmcquillan/prompts/prompts"
+	"github.com/johanmcquillan/prompts"
 	"github.com/stretchr/testify/assert"
 )
 
