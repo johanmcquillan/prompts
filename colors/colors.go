@@ -49,6 +49,8 @@ func (f *ShellFormatter) Format(text string) string {
 		return f.ansiFormat(text)
 	case ZSH:
 		return f.zshFormat(text)
+	case RawANSI:
+		return f.rawANSIFormat(text)
 	default:
 		// Unknown color type.
 		// We could panic here, but safer to just return the plain string for now.

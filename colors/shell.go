@@ -13,6 +13,10 @@ const (
 	UnknownShell ShellType = ""
 	BASH                   = "bash"
 	ZSH                    = "zsh"
+	// RawANSI emits plain ANSI escape codes without any shell prompt escaping,
+	// for output that is not a shell prompt (e.g. a status line). It is never
+	// detected from $SHELL, so must be set with SetShellType.
+	RawANSI = "raw-ansi"
 )
 
 func toShellType(s string) ShellType {
